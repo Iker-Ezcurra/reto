@@ -93,6 +93,7 @@ public class RepositorioCliente {
 			preparedStatement.setString(1, cliente.getUsuario());
 			preparedStatement.setString(2, cliente.getContraseina());
 			ResultSet resultSet = preparedStatement.executeQuery();
+			//creo que hay un error a partir de aqui
 			cliente.setDNI(resultSet.getString("DNI"));
 			cliente.setNombre(resultSet.getString("Nombre"));
 			cliente.setDireccion(resultSet.getString("Direccion"));

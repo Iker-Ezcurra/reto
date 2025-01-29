@@ -20,7 +20,9 @@ public class Conector {
             //La BD se encuentra en el localhost(en mi ordenador)
             //El usuario es root y la contraseña es 1234
             //La conexion se hace a traves del puerto 3306
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/reto1","root","P@ssw0rd_24");
+            
+            //la ruta se debe cambiar para cada dispositivo
+            conexion = DriverManager.getConnection("jdbc:mysql://10.10.13.141:3306/reto1","Adrian","0000");
             System.out.println("Conexion establecida");
 	        }catch(Exception e){
 	            System.out.println("Error en la conexion");

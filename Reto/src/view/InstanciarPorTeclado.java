@@ -82,7 +82,7 @@ public class InstanciarPorTeclado {
 		System.out.println("Usuario: ");
 		String usuario = teclado.next();
 		System.out.println("Contraseña: ");
-		String contraseina = teclado.nextLine();
+		String contraseina = teclado.next();
 		Cliente cliente = new Cliente(usuario, contraseina);
 		return cliente;
 	}
