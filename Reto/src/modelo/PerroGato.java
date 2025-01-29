@@ -1,6 +1,7 @@
 package modelo;
 
 public class PerroGato extends Animal {
+	//soy perro y gato iujuu
 
 	//atributos
 	private String raza;
