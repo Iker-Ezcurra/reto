@@ -23,6 +23,8 @@ public class Cita {
 		this.fecha = fecha;
 		this.hora = hora;
 	}
+	
+	public Cita () {}
 
 	//getters & setters
 	public int getCodigo() {

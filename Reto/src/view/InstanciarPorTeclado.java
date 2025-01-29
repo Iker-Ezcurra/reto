@@ -6,11 +6,11 @@ import java.util.Scanner;
 import modelo.Animal;
 import modelo.Ave;
 import modelo.Cliente;
-import modelo.PerroGato;
+import modelo.Peludo;
 import modelo.Reptil;
 import repositorios.RepositorioAnimal;
 
-public class Crear {
+public class InstanciarPorTeclado {
 	
 	static Scanner teclado = new Scanner(System.in);
 
@@ -38,7 +38,7 @@ public class Crear {
 		case 1:
 			System.out.println("Raza:");
 			String raza = teclado.nextLine();
-			animal = new PerroGato(codigoChip, nombre, sexo, edad, raza);
+			animal = new Peludo(codigoChip, nombre, sexo, edad, raza);
 			break;
 		case 2:
 			System.out.println("Especie: ");
@@ -80,7 +80,7 @@ public class Crear {
 	
 	public static Cliente ClienteInicioSesion() {
 		System.out.println("Usuario: ");
-		String usuario = teclado.nextLine();
+		String usuario = teclado.next();
 		System.out.println("Contraseña: ");
 		String contraseina = teclado.nextLine();
 		Cliente cliente = new Cliente(usuario, contraseina);

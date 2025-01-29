@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import modelo.Cliente;
-import view.Crear;
+import view.InstanciarPorTeclado;
 
 public class RepositorioCliente {
 	
 	//comprueba que exista un cliente con este usuario
-  	public static boolean comprobarClienteUsuario(Cliente cliente) {
+  	public static boolean comprobarCliente(Cliente cliente) {
   		boolean encontrado = false;
   		//preparamos la consulta
   		String queryCheck = "SELECT COUNT(*) FROM Cliente WHERE Usuario = ?";
@@ -51,9 +51,9 @@ public class RepositorioCliente {
   	//devuelve booleano que indica si se ha insertado o no
 	public static boolean registrar() throws SQLException {
 		boolean hecho = false;
-		Cliente cliente = Crear.Cliente();
+		Cliente cliente = InstanciarPorTeclado.Cliente();
 		//llamada al metodo comprobar 
-		if(RepositorioCliente.comprobarClienteUsuario(cliente)) {
+		if(RepositorioCliente.comprobarCliente(cliente)) {
 			System.out.println("Este usuario esta ya en uso");
 		}else {
 			//llama al metodo insertar
@@ -79,41 +79,26 @@ public class RepositorioCliente {
 	
 	//metodo para iniciar sesion
 	public static Cliente inicioSesion() throws SQLException {
-		Cliente cliente = Crear.ClienteInicioSesion();
+		Cliente cliente = InstanciarPorTeclado.ClienteInicioSesion();
 		//llamada al metodo comprobar 
 		if(RepositorioCliente.comprobarClienteUsuarioConstraseina(cliente)) {
-			cliente=RepositorioCliente.Cliente(cliente);
+			cliente=RepositorioCliente.construir(cliente);
 		}
 		return cliente;
 	}
 	
-	public static Cliente Cliente(Cliente cliente) throws  SQLException {
+	public static Cliente construir(Cliente cliente) throws  SQLException {
 		String consulta = "SELECT DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=? AND Contraseina = ?";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, cliente.getUsuario());
 			preparedStatement.setString(2, cliente.getContraseina());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			int columnCount = resultSet.getMetaData().getColumnCount();
-			while (resultSet.next()) {
-				for (int i = 1; i<=columnCount; i++) {
-					switch (i) {
-					case 1: 
-						cliente.setDNI(resultSet.getString(i));
-						break;
-					case 2:
-						cliente.setNombre(resultSet.getString(i));
-						break;
-					case 3:
-						cliente.setDireccion(resultSet.getString(i));
-						break;
-					case 4:
-						cliente.setNumTel(resultSet.getInt(i));
-					} 	
-				}
-			}
+			cliente.setDNI(resultSet.getString("DNI"));
+			cliente.setNombre(resultSet.getString("Nombre"));
+			cliente.setDireccion(resultSet.getString("Direccion"));
+			cliente.setNumTel(resultSet.getInt("NumeroTelefono"));	
 		}
 		return cliente;
 	}
-	 
 	
 }

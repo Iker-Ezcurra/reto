@@ -1,13 +1,12 @@
 package modelo;
 
-public class PerroGato extends Animal {
-	//soy perro y gato iujuu
+public class Peludo extends Animal {
 
 	//atributos
 	private String raza;
 	
 	//Constructor
-	public PerroGato(String CodigoChip, String nombre, String sexo, int edad, String raza) {
+	public Peludo(String CodigoChip, String nombre, String sexo, int edad, String raza) {
 		super(CodigoChip, nombre, sexo, edad);
 		this.raza = raza;
 	}
