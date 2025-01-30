@@ -83,23 +83,28 @@ public class RepositorioCliente {
 		//llamada al metodo comprobar 
 		if(RepositorioCliente.comprobarClienteUsuarioConstraseina(cliente)) {
 			cliente=RepositorioCliente.construir(cliente);
+			return cliente;
+		}else {
+			return null;
 		}
-		return cliente;
+		
 	}
 	
 	public static Cliente construir(Cliente cliente) throws  SQLException {
 		String consulta = "SELECT DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=? AND Contraseina = ?";
+		Cliente cliente2=null;
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, cliente.getUsuario());
 			preparedStatement.setString(2, cliente.getContraseina());
 			ResultSet resultSet = preparedStatement.executeQuery();
+			
 			//creo que hay un error a partir de aqui
-			cliente.setDNI(resultSet.getString("DNI"));
-			cliente.setNombre(resultSet.getString("Nombre"));
-			cliente.setDireccion(resultSet.getString("Direccion"));
-			cliente.setNumTel(resultSet.getInt("NumeroTelefono"));	
-		}
-		return cliente;
+			if(resultSet.next()) {
+				cliente2=new Cliente(resultSet.getString("DNI"), resultSet.getString("Nombre"), resultSet.getString("Direccion"), resultSet.getInt("NumeroTelefono"));
+			}
+			
+		} 
+		return cliente2;
 	}
 	
 }

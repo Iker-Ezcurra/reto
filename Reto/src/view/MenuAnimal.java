@@ -22,7 +22,7 @@ public class MenuAnimal {
 			int opcion = sc.nextInt();
 			if (opcion == 1) {
 				System.out.println("Introduce el codigo de su chip");
-				animal.setCodigoChip(sc.nextLine());
+				animal.setCodigoChip(sc.next());
 				if(RepositorioAnimal.comprobar(animal)) {
 					System.out.println("Animal encontrado");
 					animal = RepositorioAnimal.contruirAnimal(animal);

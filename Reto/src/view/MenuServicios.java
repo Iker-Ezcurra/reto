@@ -12,7 +12,7 @@ public class MenuServicios {
 		int op;
 		do {
 			System.out.println("\n--- Servicios disponibles ---");
-			RepositorioServicio.servicios(sucursal);
+			RepositorioServicio.serviciosPorSucursal(sucursal);
 			System.out.println();
 			System.out.println("1. Volver atras");
 			op = sc.nextInt();

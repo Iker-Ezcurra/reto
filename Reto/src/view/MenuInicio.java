@@ -31,9 +31,11 @@ public class MenuInicio {
 			} else if (opcion == 2) {
 				System.out.println("\n--- Estás iniciando sesión ---");
 				cliente = RepositorioCliente.inicioSesion();
-				if (cliente.getDNI()!="") {
+				if (cliente!=null) {
 					System.out.println("Has iniciado sesion");
 					fin=true;
+				} else {
+					System.out.println("El usuario no es correcto");
 				}
 			} else {
 				System.out.println("Opción inválida");

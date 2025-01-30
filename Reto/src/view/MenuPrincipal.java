@@ -27,7 +27,7 @@ public class MenuPrincipal {
 			opcion = sc.nextInt();
 			switch (opcion) {
 			case 1:
-				RepositorioServicio.servicios(MenuOficinas.mostrar());
+				RepositorioServicio.serviciosPorSucursal(MenuOficinas.mostrar());
 				break;
 			case 2:
 				animal = MenuAnimal.mostrar();

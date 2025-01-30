@@ -20,6 +20,14 @@ public class Cliente {
 		this.numTelf = numTelf;
 	}
 	
+	public Cliente ( String DNI, String nombre, String direccion, int numTelf) {
+		this.DNI = DNI;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.numTelf = numTelf;
+	}
+	
+	
 	public Cliente (String usuario, String contraseina) {
 		this.usuario=usuario;
 		this.contraseina=contraseina;
