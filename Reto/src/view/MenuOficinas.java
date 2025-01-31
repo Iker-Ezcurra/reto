@@ -3,6 +3,9 @@ package view;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import modelo.Sucursal;
+import repositorios.RepositorioSucursal;
+
 public class MenuOficinas {
 	
 	public static int mostrar() throws SQLException {
@@ -20,7 +23,8 @@ public class MenuOficinas {
 			System.out.println("5. Volver atras");
 			opcion = sc.nextInt();
 			if (opcion >0 && opcion <5) {
-				MenuServicios.mostrar(opcion);
+				Sucursal sucursal = RepositorioSucursal.contruirSucursal(opcion);
+				MenuServicios.mostrar(sucursal);
 			} else if(opcion==5) {
 				
 			} else {

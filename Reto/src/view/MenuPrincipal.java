@@ -23,11 +23,12 @@ public class MenuPrincipal {
 			System.out.println("1. Ver servicios");
 			System.out.println("2. Hacer reserva");
 			System.out.println("3. Cambiar de usuario");
-			System.out.println("4. Cerrar aplicacion");
+			System.out.println("4. Carrito");
+			System.out.println("5. Cerrar aplicacion");
 			opcion = sc.nextInt();
 			switch (opcion) {
 			case 1:
-				RepositorioServicio.serviciosPorSucursal(MenuOficinas.mostrar());
+				MenuOficinas.mostrar();
 				break;
 			case 2:
 				animal = MenuAnimal.mostrar();
@@ -39,6 +40,9 @@ public class MenuPrincipal {
 				cliente=MenuInicio.mostrar();
 				break;
 			case 4:
+				MenuCarrito.mostrar(listaCitas, listaAnimales);
+				break;
+			case 5:
 				//hay que hacer un if se ha hecho una reserva mostrar carrito
 				System.exit(0);
 				break;
@@ -46,7 +50,7 @@ public class MenuPrincipal {
 				System.out.println("Opcion invalida");
 				break;
 			}
-		} while (opcion!=4);
+		} while (opcion!=5);
 		
 	}
 	

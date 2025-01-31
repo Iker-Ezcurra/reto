@@ -22,20 +22,29 @@ public class MenuInicio {
 			opcion = teclado.nextInt();
 			if (opcion == 1) {
 				System.out.println("\n--- Estás registrandote ---");
-				if (RepositorioCliente.registrar()) {
+				cliente = InstanciarPorTeclado.Cliente();
+				if (RepositorioCliente.comprobarCliente(cliente)) {
+					System.out.println("Este usuario esta ya en uso");
+				} else {
+					RepositorioCliente.insertar(cliente);
+				    fin = true;
+				    System.out.println("Cuenta creada con éxito");
+				}
+				/*if (RepositorioCliente.registrar()) {
 					System.out.println("Cuenta creada");
 					System.out.println("Inicia sesion en ella");
 				} else {
 					System.out.println("No se ha podido crear la cuenta");
-				}
+				}*/
 			} else if (opcion == 2) {
 				System.out.println("\n--- Estás iniciando sesión ---");
-				cliente = RepositorioCliente.inicioSesion();
-				if (cliente!=null) {
+				cliente = InstanciarPorTeclado.ClienteInicioSesion();
+				if (RepositorioCliente.comprobarClienteUsuarioConstraseina(cliente)) {
+					cliente = RepositorioCliente.construir(cliente);
 					System.out.println("Has iniciado sesion");
 					fin=true;
 				} else {
-					System.out.println("El usuario no es correcto");
+					System.out.println("El usuario o contraseña no es correcto");
 				}
 			} else {
 				System.out.println("Opción inválida");

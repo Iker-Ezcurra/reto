@@ -13,7 +13,18 @@ public class Servicio {
 		this.descripcion = descripcion;
 		this.coste=coste;
 	}
-
+	
+	public Servicio(String descripcion, int coste) {
+		this.descripcion = descripcion;
+		this.coste=coste;
+	}
+	
+	public Servicio(int codigo) {
+		this.codigo = codigo;
+	}
+	
+	public Servicio() {}
+	
 	//getters & setters
 	public int getCodigo() {
 		return codigo;
@@ -35,8 +46,15 @@ public class Servicio {
 		return coste;
 	}
 	
-	public void setConste(int coste) {
+	public void setCoste(int coste) {
 		this.coste=coste;
 	}
+
+	@Override
+	public String toString() {
+		return descripcion + "\t" + "\t" + coste + "€";
+	}
+	
+	
 
 }

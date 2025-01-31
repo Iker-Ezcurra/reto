@@ -47,22 +47,6 @@ public class RepositorioCliente {
   		return encontrado;
   	}
 	
-  	//metodo que comprueba la existencia del cliente en la base de datos y lo inserta en caso de no existir
-  	//devuelve booleano que indica si se ha insertado o no
-	public static boolean registrar() throws SQLException {
-		boolean hecho = false;
-		Cliente cliente = InstanciarPorTeclado.Cliente();
-		//llamada al metodo comprobar 
-		if(RepositorioCliente.comprobarCliente(cliente)) {
-			System.out.println("Este usuario esta ya en uso");
-		}else {
-			//llama al metodo insertar
-			RepositorioCliente.insertar(cliente);
-		    hecho = true;
-		}
-		return hecho;
-	}
-	
 	//método para insertar un cliente en la tabla
 	public static void insertar(Cliente cliente) throws SQLException {
 		String query = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?)";
@@ -77,34 +61,18 @@ public class RepositorioCliente {
 		}
 	}
 	
-	//metodo para iniciar sesion
-	public static Cliente inicioSesion() throws SQLException {
-		Cliente cliente = InstanciarPorTeclado.ClienteInicioSesion();
-		//llamada al metodo comprobar 
-		if(RepositorioCliente.comprobarClienteUsuarioConstraseina(cliente)) {
-			cliente=RepositorioCliente.construir(cliente);
-			return cliente;
-		}else {
-			return null;
-		}
-		
-	}
-	
 	public static Cliente construir(Cliente cliente) throws  SQLException {
-		String consulta = "SELECT DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=? AND Contraseina = ?";
-		Cliente cliente2=null;
+		String consulta = "SELECT DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=?";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, cliente.getUsuario());
-			preparedStatement.setString(2, cliente.getContraseina());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			//creo que hay un error a partir de aqui
 			if(resultSet.next()) {
-				cliente2=new Cliente(resultSet.getString("DNI"), resultSet.getString("Nombre"), resultSet.getString("Direccion"), resultSet.getInt("NumeroTelefono"));
+				cliente.setDNI(resultSet.getString("DNI"));
+				cliente.setNombre(resultSet.getString("Nombre"));
+				cliente.setDireccion(resultSet.getString("Direccion"));
+				cliente.setNumTel(resultSet.getInt("NumeroTelefono"));
 			}
-			
-		} 
-		return cliente2;
+		}
+		return cliente;
 	}
-	
 }

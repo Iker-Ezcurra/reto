@@ -61,15 +61,15 @@ public class InstanciarPorTeclado {
 	
 	public static Cliente Cliente() throws SQLException {
 		System.out.println("Usuario: ");
-		String usuario = teclado.nextLine();
+		String usuario = teclado.next();
 		System.out.println("Contraseña: ");
-		String contraseina = teclado.nextLine();
+		String contraseina = teclado.next();
 		System.out.println("DNI: ");
-		String DNI = teclado.nextLine();
+		String DNI = teclado.next();
 		System.out.println("Nombre: ");
-		String nombre = teclado.nextLine();
+		String nombre = teclado.next();
 		System.out.println("Dirección: ");
-		String direccion = teclado.nextLine();
+		String direccion = teclado.next();
 		System.out.println("Número de teléfono: ");
 		int numTelf = teclado.nextInt();
 		Cliente cliente = new Cliente(usuario, contraseina, DNI, nombre, direccion, numTelf);

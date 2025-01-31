@@ -66,5 +66,11 @@ public class Cita {
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
+
+	@Override
+	public String toString() {
+		return "Cita [costeTotal=" + costeTotal + ", fecha=" + fecha + ", fechaFin=" + fechaFin
+				+ ", hora=" + hora + "]";
+	}
 	
 }
