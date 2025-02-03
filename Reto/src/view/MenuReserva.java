@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Scanner;
 import modelo.Animal;
 import modelo.Ave;
@@ -12,11 +13,12 @@ import modelo.Peludo;
 import modelo.Reptil;
 import modelo.Servicio;
 import modelo.Sucursal;
+import repositorios.RepositorioCita;
 import repositorios.RepositorioServicio;
 import repositorios.RepositorioSucursal;
 
 public class MenuReserva {
-	public static Cita mostrar(Animal animal) throws SQLException {
+	public static Cita mostrar(Animal animal, ArrayList<Cita> listaCitas) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		int costeTotal = 0;
 		String fecha;
@@ -47,15 +49,15 @@ public class MenuReserva {
 		int codServicio = teclado.nextInt();
 		Servicio servicio = new Servicio(codServicio);
 		if(codServicio == 1) {
-			DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate dateInicio;
 			LocalDate dateFin;
 			long diferenciaDias;
 			do {
-				System.out.println("¿Desde que dia quieres el servicio?(dd/mm/yyyy)");
+				System.out.println("¿Desde que dia quieres el servicio?(yyyy-mm-dd)");
 				fecha = teclado.next();
 				dateInicio = LocalDate.parse(fecha, formatter);
-				System.out.println("¿Hasta que dia quieres el servicio?(dd/MM/yyyy)");
+				System.out.println("¿Hasta que dia quieres el servicio?(yyyy-mm-dd)");
 				fechaFin = teclado.next();
 				dateFin = LocalDate.parse(fechaFin, formatter);
 				diferenciaDias = ChronoUnit.DAYS.between(dateInicio, dateFin);
@@ -65,8 +67,18 @@ public class MenuReserva {
 			} while(diferenciaDias < 1);
 			costeTotal = RepositorioServicio.construir(servicio).getCoste() * (int) diferenciaDias;
 		} else {
-			System.out.println("¿Que dia quieres el servicio?(dd/mm/yyyy)");
+			System.out.println("¿Que dia quieres el servicio?(yyyy-mm-dd)");
 			fecha = teclado.next();
+			RepositorioCita.horasOcupadasPorSucursal(fecha, sucursal);
+			for (int i = 0; i < listaCitas.size(); i++) {
+				if ((fecha.equals(listaCitas.get(i).getFecha())) && (sucursalCodigo == listaCitas.get(i).getCodSucursal())) {
+					for (int j = 0; j < sucursal.getHorarios().size(); j++) {
+						if (listaCitas.get(i).getHora().equals(sucursal.getHorarios().get(j))) {
+							sucursal.getHorarios().remove(j);
+						}
+					}
+				}
+			}
 			System.out.println("Elige entre las horas disponibles:");
 			System.out.println(sucursal.toString());
 			aux = (teclado.nextInt() - 1);
@@ -78,6 +90,8 @@ public class MenuReserva {
 		cita.setFecha(fecha);
 		cita.setFechaFin(fechaFin);
 		cita.setHora(hora);
+		cita.setCodSucursal(sucursalCodigo);
+		System.out.println("Cita realizada con exito");
 		return cita;
 	}
 }

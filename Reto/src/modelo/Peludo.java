@@ -10,6 +10,8 @@ public class Peludo extends Animal {
 		super(CodigoChip, nombre, sexo, edad);
 		this.raza = raza;
 	}
+	
+	public Peludo() {}
 
 	//getters & setters
 	public String getRaza() {

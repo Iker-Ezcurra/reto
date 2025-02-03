@@ -9,7 +9,7 @@ public class Sucursal {
 	private int codigo;
 	private String direccion;
 	private String localidad;
-	private ArrayList<String> Horarios = new ArrayList<>(Arrays.asList("09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"));
+	private ArrayList<String> Horarios = new ArrayList<>(Arrays.asList("09:00:00", "09:30:00", "10:00:00", "10:30:00", "11:00:00", "11:30:00", "12:00:00", "12:30:00", "16:00:00", "16:30:00", "17:00:00", "17:30:00", "18:00:00", "18:30:00", "19:00:00", "19:30:00"));
 	
 	//constructor
 	public Sucursal(int codigo, String direccion, String localidad) {
@@ -17,6 +17,10 @@ public class Sucursal {
 		this.codigo = codigo;
 		this.direccion = direccion;
 		this.localidad = localidad;
+	}
+	
+	public Sucursal (int codigo) {
+		this.codigo = codigo;
 	}
 	
 	public Sucursal() {}

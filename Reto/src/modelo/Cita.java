@@ -8,6 +8,7 @@ public class Cita {
 	private String fecha;
 	private String fechaFin;
 	private String hora;
+	private int codSucursal;
 	
 	//constructores
 	public Cita(int codigo, int costeTotal, String fecha, String fechaFin) {
@@ -22,6 +23,14 @@ public class Cita {
 		this.costeTotal = coste;
 		this.fecha = fecha;
 		this.hora = hora;
+	}
+	
+	public Cita(int codigo, int costeTotal, String fecha, String fechaFin, int codSucursal) {
+		this.codigo = codigo;
+		this.costeTotal = costeTotal;
+		this.fecha = fecha;
+		this.fechaFin = fechaFin;
+		this.codSucursal = codSucursal;
 	}
 	
 	public Cita () {}
@@ -65,6 +74,14 @@ public class Cita {
 
 	public void setHora(String hora) {
 		this.hora = hora;
+	}
+	
+	public int getCodSucursal() {
+		return codSucursal;
+	}
+	
+	public void setCodSucursal(int codSucursal) {
+		this.codSucursal = codSucursal;
 	}
 
 	@Override

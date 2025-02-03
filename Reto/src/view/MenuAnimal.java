@@ -1,17 +1,24 @@
 package view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import modelo.Animal;
-import repositorios.Conector;
+import modelo.Ave;
+import modelo.Peludo;
+import modelo.Reptil;
 import repositorios.RepositorioAnimal;
+import repositorios.RepositorioServicio;
 
 public class MenuAnimal {
 	
-	public static Animal mostrar() throws SQLException {
+	public static Animal mostrar(ArrayList<Animal> listaAnimales) throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		Animal animal = new Animal();
+		Animal ave = new Ave();
+		Animal peludo = new Peludo();
+		Animal reptil = new Reptil();
 		boolean fin = false;
 		while (!fin) {
 			System.out.println("\n--- Reservando cita---");
@@ -22,15 +29,34 @@ public class MenuAnimal {
 			int opcion = sc.nextInt();
 			if (opcion == 1) {
 				System.out.println("Introduce el codigo de su chip");
-				animal.setCodigoChip(sc.next());
+				String codChip = sc.next();
+				animal.setCodigoChip(codChip);
 				if(RepositorioAnimal.comprobar(animal)) {
 					System.out.println("Animal encontrado");
 					animal = RepositorioAnimal.contruirAnimal(animal);
 					fin = true;
 				} else {
+					for (int i = 0; i < listaAnimales.size(); i++) {
+						if ((codChip.equals(listaAnimales.get(i).getCodigoChip()))) {
+							if(animal instanceof Reptil) {
+								reptil = listaAnimales.get(i);
+								animal = reptil;
+							} else if (animal instanceof Ave) {
+								ave = listaAnimales.get(i);
+								animal = ave;
+							} else if (animal instanceof Peludo) {
+								peludo = listaAnimales.get(i);
+								animal = peludo;
+							} else if (animal instanceof Animal){
+								animal = listaAnimales.get(i);
+							}
+						}
+					}
+					fin = true;
+				}
+				if (fin == false) {
 					System.out.println("Este chip no pertenece a ningun animal");
 				}
-				
 			} else if (opcion == 2){
 				System.out.println("Registra a tu animal");
 				animal = InstanciarPorTeclado.Animal();

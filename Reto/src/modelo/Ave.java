@@ -10,6 +10,8 @@ public class Ave extends Animal {
 		super(CodigoChip, nombre, sexo, edad);
 		this.especie = especie;
 	}
+	
+	public Ave() {}
 
 	//getters & setters
 	public String getEspecie() {

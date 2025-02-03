@@ -59,9 +59,11 @@ public class RepositorioAnimal {
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, animal.getCodigoChip());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			animal.setNombre(resultSet.getString("Nombre"));
-			animal.setSexo(resultSet.getString("Sexo"));
-			animal.setEdad(resultSet.getInt("Edad"));
+			if(resultSet.next()) {
+				animal.setNombre(resultSet.getString("Nombre"));
+				animal.setSexo(resultSet.getString("Sexo"));
+				animal.setEdad(resultSet.getInt("Edad"));
+			}
 		}
 		return animal;
 	} 

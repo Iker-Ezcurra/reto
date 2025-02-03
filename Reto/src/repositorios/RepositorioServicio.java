@@ -20,8 +20,8 @@ public class RepositorioServicio {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				servicio.setDescripcion(resultSet.getString("Descripcion"));
-				servicio.setCoste(resultSet.getInt("Descripcion"));
-	            System.out.println(servicio.toString());
+				servicio.setCoste(resultSet.getInt("Coste"));
+				System.out.println(servicio.toString());
 	        }
 		}
 	}

@@ -10,6 +10,8 @@ public class Reptil extends Animal{
 		super(CodigoChip, nombre, sexo, edad);
 		this.dieta = dieta;
 	}
+	
+	public Reptil() {}
 
 	//getters & setters
 	public String getDieta() {

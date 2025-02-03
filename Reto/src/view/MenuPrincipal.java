@@ -31,13 +31,13 @@ public class MenuPrincipal {
 				MenuOficinas.mostrar();
 				break;
 			case 2:
-				animal = MenuAnimal.mostrar();
+				animal = MenuAnimal.mostrar(listaAnimales);
 				listaAnimales.add(animal);
-				cita = MenuReserva.mostrar(animal);
+				cita = MenuReserva.mostrar(animal, listaCitas);
 				listaCitas.add(cita);
 				break;
 			case 3:
-				cliente=MenuInicio.mostrar();
+				cliente = MenuInicio.mostrar();
 				break;
 			case 4:
 				MenuCarrito.mostrar(listaCitas, listaAnimales);
