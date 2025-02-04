@@ -14,7 +14,7 @@ public class RepositorioServicio {
 	public static void serviciosPorSucursal(Sucursal sucursal) throws SQLException {
 		Servicio servicio = new Servicio();
 		//consulta
-		String consulta = "SELECT SE.Descripcion, SE.Coste FROM sucursal SU JOIN dispone D ON SU.Codigo=D.CodigoSucursal JOIN servicio SE ON SE.Codigo=D.CodigoServicio where ? = SU.Codigo";
+		String consulta = "SELECT SE.Descripcion, SE.Coste FROM servicio SE JOIN dispone D ON SE.Codigo=D.CodigoServicio where ? = D.CodigoSucursal";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)) {
 			preparedStatement.setInt(1, sucursal.getCodigo()); 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -28,13 +28,14 @@ public class RepositorioServicio {
 	
 	//mostrar lista de servicios segun el animal y la sucursal
 	public static void serviciosPorSurcursalYAnimal(Sucursal sucursal, String tipoAnimal) throws SQLException {
-		String consulta = "SELECT SE.Descripcion, SE.Coste FROM Sucursal SU JOIN Dispone D ON Su.Codigo = D.CodigoSucursal JOIN Servicio SE ON D.CodigoServicio = SE.Codigo WHERE SU.Codigo = ? AND SE.TipoAnimal = ? OR SE.TipoAnimal = ? GROUP BY SE.Descripcion, SE.Coste";
+		String consulta = "SELECT SE.Descripcion, SE.Coste FROM servicio SE JOIN dispone D ON SE.Codigo = D.CodigoServicio WHERE ? = D.CodigoSucursal AND SE.TipoAnimal = ? OR SE.TipoAnimal = ? GROUP BY CodigoServicio";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)) {
 			preparedStatement.setInt(1, sucursal.getCodigo());
 			preparedStatement.setString(2, tipoAnimal);
 			preparedStatement.setString(3, "Todos");
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
+				System.out.println("A");
 				Servicio servicio = new Servicio(resultSet.getString("Descripcion"), resultSet.getInt("Coste"));
 				System.out.println(servicio.toString());
 	        }

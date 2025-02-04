@@ -24,8 +24,13 @@ public class MenuReserva {
 		String fecha;
 		String fechaFin = null;
 		String hora = null;
-		Cita cita = new Cita();
 		int aux;
+		
+		Cita cita = new Cita();
+		Ave ave;
+		Reptil reptil;
+		Peludo peludo;
+
 		System.out.println("--- ¿A que sucursal desea asistir? ---");
 		System.out.println();
 		System.out.println("Escoge una de las opciones: ");
@@ -86,7 +91,7 @@ public class MenuReserva {
 			sucursal.getHorarios().remove(aux);
 			costeTotal = RepositorioServicio.construir(servicio).getCoste();
 		}
-		cita.setCoste(costeTotal);
+		cita.setCosteTotal(costeTotal);
 		cita.setFecha(fecha);
 		cita.setFechaFin(fechaFin);
 		cita.setHora(hora);

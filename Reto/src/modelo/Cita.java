@@ -4,13 +4,27 @@ public class Cita {
 
 	//atributos
 	private int codigo;
+	private String codAnimal;
+	private int codServicio;
+	private int codSucursal;
 	private int costeTotal;
 	private String fecha;
 	private String fechaFin;
 	private String hora;
-	private int codSucursal;
 	
 	//constructores
+	
+	public Cita(int codigo, String codAnimal, int codServicio, int codSucursal, int costeTotal, String fecha, String fechaFin, String hora) {
+		this.codigo = codigo;
+		this.codAnimal = codAnimal;
+		this.codServicio = codServicio;
+		this.codSucursal = codSucursal;
+		this.costeTotal = costeTotal;
+		this.fecha = fecha;
+		this.fechaFin = fechaFin;
+		this.hora = hora;
+	}
+	
 	public Cita(int codigo, int costeTotal, String fecha, String fechaFin) {
 		this.codigo = codigo;
 		this.costeTotal = costeTotal;
@@ -43,15 +57,7 @@ public class Cita {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-
-	public int getCoste() {
-		return costeTotal;
-	}
-
-	public void setCoste(int coste) {
-		this.costeTotal = coste;
-	}
-
+	
 	public String getFecha() {
 		return fecha;
 	}
@@ -82,6 +88,30 @@ public class Cita {
 	
 	public void setCodSucursal(int codSucursal) {
 		this.codSucursal = codSucursal;
+	}
+
+	public String getCodAnimal() {
+		return codAnimal;
+	}
+
+	public void setCodAnimal(String codAnimal) {
+		this.codAnimal = codAnimal;
+	}
+
+	public int getCodServicio() {
+		return codServicio;
+	}
+
+	public void setCodServicio(int codServicio) {
+		this.codServicio = codServicio;
+	}
+
+	public int getCosteTotal() {
+		return costeTotal;
+	}
+
+	public void setCosteTotal(int costeTotal) {
+		this.costeTotal = costeTotal;
 	}
 
 	@Override

@@ -9,6 +9,9 @@ import modelo.Ave;
 import modelo.Peludo;
 import modelo.Reptil;
 import repositorios.RepositorioAnimal;
+import repositorios.RepositorioAve;
+import repositorios.RepositorioPeludo;
+import repositorios.RepositorioReptil;
 import repositorios.RepositorioServicio;
 
 public class MenuAnimal {
@@ -16,9 +19,9 @@ public class MenuAnimal {
 	public static Animal mostrar(ArrayList<Animal> listaAnimales) throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		Animal animal = new Animal();
-		Animal ave = new Ave();
-		Animal peludo = new Peludo();
-		Animal reptil = new Reptil();
+		Ave ave = new Ave();
+		Peludo peludo = new Peludo();
+		Reptil reptil = new Reptil();
 		boolean fin = false;
 		while (!fin) {
 			System.out.println("\n--- Reservando cita---");
@@ -30,10 +33,25 @@ public class MenuAnimal {
 			if (opcion == 1) {
 				System.out.println("Introduce el codigo de su chip");
 				String codChip = sc.next();
+				reptil.setCodigoChip(codChip);
+				ave.setCodigoChip(codChip);
+				peludo.setCodigoChip(codChip);
 				animal.setCodigoChip(codChip);
-				if(RepositorioAnimal.comprobar(animal)) {
+				if (RepositorioReptil.comprobar(reptil)) {
 					System.out.println("Animal encontrado");
-					animal = RepositorioAnimal.contruirAnimal(animal);
+					reptil = RepositorioAnimal.construirAnimal(reptil);
+					fin = true;
+				} else if (RepositorioAve.comprobar(ave)) {
+					System.out.println("Animal encontrado");
+					animal = RepositorioAnimal.construirAnimal(animal);
+					fin = true;
+				} else if (RepositorioPeludo.comprobar(peludo)) {
+					System.out.println("Animal encontrado");
+					animal = RepositorioAnimal.construirAnimal(animal);
+					fin = true;
+				} else if(RepositorioAnimal.comprobar(animal)) {
+					System.out.println("Animal encontrado");
+					animal = RepositorioAnimal.construirAnimal(animal);
 					fin = true;
 				} else {
 					for (int i = 0; i < listaAnimales.size(); i++) {
@@ -70,7 +88,6 @@ public class MenuAnimal {
 				System.out.println("Opcion incorrecta");
 			}
 		}
-		
 		return animal;
 	}
 	

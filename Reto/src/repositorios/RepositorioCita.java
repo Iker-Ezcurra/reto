@@ -4,12 +4,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import modelo.Animal;
+import modelo.Cita;
 import modelo.Sucursal;
 
 public class RepositorioCita {
 
 	public static void horasOcupadasPorSucursal(String fecha, Sucursal sucursal) throws SQLException {
-		String query = "SELECT C.Hora FROM Cita C JOIN TieneLugar TL ON C.codigo=TL.codigoCita JOIN Sucursal S ON S.codigo=TL.codigoSucursal WHERE C.fecha=? AND S.codigo=?";
+		String query = "SELECT C.Hora FROM Cita C WHERE C.fecha = ? AND CodSucursal = ?";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)){
 			preparedStatement.setString(1, fecha);
 			preparedStatement.setInt(2, sucursal.getCodigo());
@@ -23,4 +25,19 @@ public class RepositorioCita {
 			}
 		}
 	}
+	
+	public static void insertar(Cita cita) throws SQLException {
+		String query = "INSERT INTO Cita VALUES (?, ?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
+			preparedStatement.setString(1, cita.getCodAnimal());
+			preparedStatement.setInt(2, cita.getCodServicio());
+			preparedStatement.setInt(3, cita.getCodSucursal());
+			preparedStatement.setInt(4, cita.getCosteTotal());
+			preparedStatement.setString(5, cita.getFecha());
+			preparedStatement.setString(6, cita.getFechaFin());
+			preparedStatement.setString(7, cita.getHora());
+			preparedStatement.executeUpdate();
+		}
+	}
+	
 }

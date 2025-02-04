@@ -54,7 +54,7 @@ public class RepositorioAnimal {
 		}
 	}
 	
-	public static Animal contruirAnimal(Animal animal) throws SQLException {
+	public static Animal construirAnimal(Animal animal) throws SQLException {
 		String consulta = "SELECT Nombre, Sexo, Edad FROM Animales WHERE CodigoChip=?";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, animal.getCodigoChip());
@@ -66,6 +66,6 @@ public class RepositorioAnimal {
 			}
 		}
 		return animal;
-	} 
+	}
 	
 }
