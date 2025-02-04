@@ -54,15 +54,17 @@ public class RepositorioAnimal {
 		}
 	}
 	
-	public static Animal construirAnimal(Animal animal) throws SQLException {
+	public static Animal construirAnimal(String cc) throws SQLException {
 		String consulta = "SELECT Nombre, Sexo, Edad FROM Animales WHERE CodigoChip=?";
+		Animal animal = new Animal();
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
-			preparedStatement.setString(1, animal.getCodigoChip());
+			preparedStatement.setString(1, cc);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				animal.setNombre(resultSet.getString("Nombre"));
 				animal.setSexo(resultSet.getString("Sexo"));
 				animal.setEdad(resultSet.getInt("Edad"));
+				animal.setCodigoChip(cc);
 			}
 		}
 		return animal;

@@ -21,7 +21,7 @@ public class MenuAnimal {
 		Animal animal = new Animal();
 		Ave ave = new Ave();
 		Peludo peludo = new Peludo();
-		Reptil reptil = new Reptil();
+		Animal reptil = new Reptil();
 		boolean fin = false;
 		while (!fin) {
 			System.out.println("\n--- Reservando cita---");
@@ -37,9 +37,10 @@ public class MenuAnimal {
 				ave.setCodigoChip(codChip);
 				peludo.setCodigoChip(codChip);
 				animal.setCodigoChip(codChip);
+				/*
 				if (RepositorioReptil.comprobar(reptil)) {
 					System.out.println("Animal encontrado");
-					reptil = RepositorioAnimal.construirAnimal(reptil);
+					reptil = RepositorioAnimal.construirAnimal(reptil.getCodigoChip());
 					fin = true;
 				} else if (RepositorioAve.comprobar(ave)) {
 					System.out.println("Animal encontrado");
@@ -71,7 +72,7 @@ public class MenuAnimal {
 						}
 					}
 					fin = true;
-				}
+				}*/
 				if (fin == false) {
 					System.out.println("Este chip no pertenece a ningun animal");
 				}
