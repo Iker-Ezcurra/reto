@@ -27,21 +27,6 @@ public class RepositorioAnimal {
 		return encontrado;
 	}
 	
-	//metodo que comprueba la existencia del animal en la base de datos y lo inserta en caso de no existir
-	//devuelve booleano que indica si se ha insertado o no
-	public static boolean registrar(Animal animal) throws SQLException {
-		boolean hecho = false;
-		//llamada al metodo comprobar 
-		if (RepositorioAnimal.comprobar(animal)) {
-			System.out.println("Este animal ya está registrado");
-		} else {
-			//llama al metodo insertar
-			RepositorioAnimal.insertar(animal);
-		    hecho = true;
-		}
-		return hecho;
-	}
-	
 	//método para hacer insert de un animal en la base de datos
 	public static void insertar(Animal animal) throws SQLException {
 		String query = "INSERT INTO Animales VALUES (?, ?, ?, ?)";
@@ -54,17 +39,17 @@ public class RepositorioAnimal {
 		}
 	}
 	
-	public static Animal construirAnimal(String cc) throws SQLException {
+	public static Animal construirAnimal(String codChip) throws SQLException {
 		String consulta = "SELECT Nombre, Sexo, Edad FROM Animales WHERE CodigoChip=?";
 		Animal animal = new Animal();
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
-			preparedStatement.setString(1, cc);
+			preparedStatement.setString(1, codChip);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				animal.setNombre(resultSet.getString("Nombre"));
 				animal.setSexo(resultSet.getString("Sexo"));
 				animal.setEdad(resultSet.getInt("Edad"));
-				animal.setCodigoChip(cc);
+				animal.setCodigoChip(codChip);
 			}
 		}
 		return animal;

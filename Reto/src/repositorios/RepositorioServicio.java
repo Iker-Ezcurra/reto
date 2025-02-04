@@ -42,16 +42,20 @@ public class RepositorioServicio {
 		}
 	}
 	
-	public static Servicio construir(Servicio servicio) throws  SQLException {
+	public static Servicio construir(int codServicio) throws  SQLException {
 		String consulta = "SELECT Descripcion, Coste FROM Servicio where Codigo = ?";
+		
+		Servicio servicio = new Servicio();
+		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
-			preparedStatement.setInt(1, servicio.getCodigo());
+			preparedStatement.setInt(1, codServicio);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				servicio.setDescripcion(resultSet.getString("Descripcion"));
 				servicio.setCoste(resultSet.getInt("Coste"));
 			}
 		}
+		
 		return servicio;
 	}
 	

@@ -22,7 +22,7 @@ public class MenuInicio {
 			opcion = teclado.nextInt();
 			if (opcion == 1) {
 				System.out.println("\n--- Estás registrandote ---");
-				cliente = InstanciarPorTeclado.Cliente();
+				cliente = InstanciarPorTeclado.ClienteRegistro();
 				if (RepositorioCliente.comprobarCliente(cliente)) {
 					System.out.println("Este usuario esta ya en uso");
 				} else {
@@ -30,17 +30,11 @@ public class MenuInicio {
 				    fin = true;
 				    System.out.println("Cuenta creada con éxito");
 				}
-				/*if (RepositorioCliente.registrar()) {
-					System.out.println("Cuenta creada");
-					System.out.println("Inicia sesion en ella");
-				} else {
-					System.out.println("No se ha podido crear la cuenta");
-				}*/
 			} else if (opcion == 2) {
 				System.out.println("\n--- Estás iniciando sesión ---");
 				cliente = InstanciarPorTeclado.ClienteInicioSesion();
 				if (RepositorioCliente.comprobarClienteUsuarioConstraseina(cliente)) {
-					cliente = RepositorioCliente.construir(cliente);
+					cliente = RepositorioCliente.construir(cliente.getUsuario());
 					System.out.println("Has iniciado sesion");
 					fin=true;
 				} else {

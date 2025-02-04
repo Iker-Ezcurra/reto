@@ -6,18 +6,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import modelo.Animal;
 import modelo.Ave;
 import modelo.Cita;
 import modelo.Peludo;
 import modelo.Reptil;
-import modelo.Servicio;
 import modelo.Sucursal;
 import repositorios.RepositorioCita;
 import repositorios.RepositorioServicio;
 import repositorios.RepositorioSucursal;
 
 public class MenuReserva {
+	
 	public static Cita mostrar(Animal animal, ArrayList<Cita> listaCitas) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		int costeTotal = 0;
@@ -52,7 +53,6 @@ public class MenuReserva {
 			RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Todos");
 		}
 		int codServicio = teclado.nextInt();
-		Servicio servicio = new Servicio(codServicio);
 		if(codServicio == 1) {
 			DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate dateInicio;
@@ -70,7 +70,7 @@ public class MenuReserva {
 					System.out.println("Las fechas introducidas no son válidas, intentalo de nuevo");
 				}
 			} while(diferenciaDias < 1);
-			costeTotal = RepositorioServicio.construir(servicio).getCoste() * (int) diferenciaDias;
+			costeTotal = RepositorioServicio.construir(codServicio).getCoste() * (int) diferenciaDias;
 		} else {
 			System.out.println("¿Que dia quieres el servicio?(yyyy-mm-dd)");
 			fecha = teclado.next();
@@ -89,7 +89,7 @@ public class MenuReserva {
 			aux = (teclado.nextInt() - 1);
 			hora = sucursal.getHorarios().get(aux);
 			sucursal.getHorarios().remove(aux);
-			costeTotal = RepositorioServicio.construir(servicio).getCoste();
+			costeTotal = RepositorioServicio.construir(codServicio).getCoste();
 		}
 		cita.setCosteTotal(costeTotal);
 		cita.setFecha(fecha);
@@ -99,4 +99,5 @@ public class MenuReserva {
 		System.out.println("Cita realizada con exito");
 		return cita;
 	}
+	
 }

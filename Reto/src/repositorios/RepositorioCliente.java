@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import modelo.Cliente;
-import view.InstanciarPorTeclado;
 
 public class RepositorioCliente {
 	
@@ -61,18 +60,24 @@ public class RepositorioCliente {
 		}
 	}
 	
-	public static Cliente construir(Cliente cliente) throws  SQLException {
-		String consulta = "SELECT DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=?";
+	public static Cliente construir(String usuario) throws  SQLException {
+		Cliente cliente = new Cliente();
+		
+		String consulta = "SELECT Usuario, Contraseina, DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=?";
+		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
-			preparedStatement.setString(1, cliente.getUsuario());
+			preparedStatement.setString(1, usuario);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
+				cliente.setUsuario(usuario);
+				cliente.setContraseina(resultSet.getString("Contraseina"));
 				cliente.setDNI(resultSet.getString("DNI"));
 				cliente.setNombre(resultSet.getString("Nombre"));
 				cliente.setDireccion(resultSet.getString("Direccion"));
 				cliente.setNumTel(resultSet.getInt("NumeroTelefono"));
 			}
 		}
+		
 		return cliente;
 	}
 }

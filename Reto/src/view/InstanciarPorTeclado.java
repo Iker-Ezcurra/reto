@@ -8,13 +8,13 @@ import modelo.Ave;
 import modelo.Cliente;
 import modelo.Peludo;
 import modelo.Reptil;
-import repositorios.RepositorioAnimal;
 
 public class InstanciarPorTeclado {
 	
 	static Scanner teclado = new Scanner(System.in);
 
 	public static Animal Animal() throws SQLException {
+		boolean fin = false;
 		
 		System.out.println("Codigo del chip del animal:");
 		String codigoChip = teclado.next();
@@ -28,38 +28,45 @@ public class InstanciarPorTeclado {
 		
 		Animal animal = new Animal(codigoChip, nombre, sexo, edad);
 		
-		System.out.println("¿Que tipo de animal es?");
-		System.out.println("1. Perro/Gato");
-		System.out.println("2. Ave");
-		System.out.println("3. Reptil");
-		System.out.println("4. Otro");
-		
-		int opcion = teclado.nextInt();
-		switch (opcion) {
-		case 1:
-			System.out.println("Raza:");
-			String raza = teclado.next();
-			animal = new Peludo(codigoChip, nombre, sexo, edad, raza);
-			break;
-		case 2:
-			System.out.println("Especie: ");
-			String especie = teclado.next();
-			animal = new Ave(codigoChip, nombre, sexo, edad, especie);
-			break;
-		case 3:
-			System.out.println("Dieta:");
-			String dieta = teclado.next();
-			animal = new Reptil(codigoChip, nombre, sexo, edad, dieta);
-			break;
-		case 4:
-			break;
-		default:
-			System.out.println("Opcion incorrecta");
+		while (!fin) {
+			System.out.println("¿Que tipo de animal es?");
+			System.out.println("1. Perro/Gato");
+			System.out.println("2. Ave");
+			System.out.println("3. Reptil");
+			System.out.println("4. Otro");
+			
+			int opcion = teclado.nextInt();
+			switch (opcion) {
+			case 1:
+				System.out.println("Raza:");
+				String raza = teclado.next();
+				animal = new Peludo(codigoChip, nombre, sexo, edad, raza);
+				fin = true;
+				break;
+			case 2:
+				System.out.println("Especie: ");
+				String especie = teclado.next();
+				animal = new Ave(codigoChip, nombre, sexo, edad, especie);
+				fin = true;
+				break;
+			case 3:
+				System.out.println("Dieta:");
+				String dieta = teclado.next();
+				animal = new Reptil(codigoChip, nombre, sexo, edad, dieta);
+				fin = true;
+				break;
+			case 4:
+				fin = true;
+				break;
+			default:
+				System.out.println("Opcion incorrecta");
+			}
 		}
+		
 		return animal;
 	}
 	
-	public static Cliente Cliente() throws SQLException {
+	public static Cliente ClienteRegistro() throws SQLException {
 		System.out.println("Usuario: ");
 		String usuario = teclado.next();
 		System.out.println("Contraseña: ");
@@ -72,7 +79,9 @@ public class InstanciarPorTeclado {
 		String direccion = teclado.next();
 		System.out.println("Número de teléfono: ");
 		int numTelf = teclado.nextInt();
+		
 		Cliente cliente = new Cliente(usuario, contraseina, DNI, nombre, direccion, numTelf);
+		
 		return cliente;
 	}
 	
@@ -81,7 +90,9 @@ public class InstanciarPorTeclado {
 		String usuario = teclado.next();
 		System.out.println("Contraseña: ");
 		String contraseina = teclado.next();
+		
 		Cliente cliente = new Cliente(usuario, contraseina);
+		
 		return cliente;
 	}
 	

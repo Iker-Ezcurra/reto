@@ -1,7 +1,7 @@
 package packmain;
 
 import java.sql.SQLException;
-import modelo.Cliente;
+
 import repositorios.Conector;
 import view.MenuInicio;
 import view.MenuPrincipal;
@@ -12,8 +12,6 @@ public class Main {
 		Conector.conectar();
 		
 		MenuPrincipal.mostrar(MenuInicio.mostrar());
-		
-		
 	}
 
 }

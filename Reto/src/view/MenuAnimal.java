@@ -9,10 +9,6 @@ import modelo.Ave;
 import modelo.Peludo;
 import modelo.Reptil;
 import repositorios.RepositorioAnimal;
-import repositorios.RepositorioAve;
-import repositorios.RepositorioPeludo;
-import repositorios.RepositorioReptil;
-import repositorios.RepositorioServicio;
 
 public class MenuAnimal {
 	
@@ -79,7 +75,7 @@ public class MenuAnimal {
 			} else if (opcion == 2){
 				System.out.println("Registra a tu animal");
 				animal = InstanciarPorTeclado.Animal();
-				if(RepositorioAnimal.comprobar(animal)) {
+				if (RepositorioAnimal.comprobar(animal)) {
 					System.out.println("Este animal ya esta registrado");
 				} else {
 					System.out.println("Animal registrado correctamente");

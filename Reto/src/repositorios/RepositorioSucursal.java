@@ -10,7 +10,9 @@ public class RepositorioSucursal {
 	
 	public static Sucursal contruirSucursal(int codSucursal) throws SQLException {
 		String consulta = "SELECT Direccion, localidad FROM Sucursal WHERE Codigo=?";
+		
 		Sucursal sucursal = new Sucursal(codSucursal);
+		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setInt(1, codSucursal);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -19,7 +21,8 @@ public class RepositorioSucursal {
 				sucursal.setLocalidad(resultSet.getString("Localidad"));
 			}		
 		}
+		
 		return sucursal;
-	} 
+	}
 
 }

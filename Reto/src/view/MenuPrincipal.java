@@ -3,9 +3,9 @@ package view;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import modelo.Cita;
 import modelo.Cliente;
-import repositorios.RepositorioServicio;
 import modelo.Animal;
 
 public class MenuPrincipal {
