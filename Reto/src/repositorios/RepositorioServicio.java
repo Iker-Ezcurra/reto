@@ -3,6 +3,7 @@ package repositorios;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import modelo.Cliente;
 import modelo.Servicio;
@@ -27,19 +28,22 @@ public class RepositorioServicio {
 	}
 	
 	//mostrar lista de servicios segun el animal y la sucursal
-	public static void serviciosPorSurcursalYAnimal(Sucursal sucursal, String tipoAnimal) throws SQLException {
-		String consulta = "SELECT SE.Descripcion, SE.Coste FROM servicio SE JOIN dispone D ON SE.Codigo = D.CodigoServicio WHERE ? = D.CodigoSucursal AND SE.TipoAnimal = ? OR SE.TipoAnimal = ? GROUP BY CodigoServicio";
+	public static ArrayList<Servicio> serviciosPorSurcursalYAnimal(Sucursal sucursal, String tipoAnimal, ArrayList<Servicio> listaServicios) throws SQLException {
+		String consulta = "SELECT SE.Codigo, SE.Descripcion, SE.Coste FROM servicio SE JOIN dispone D ON SE.Codigo = D.CodigoServicio WHERE ? = D.CodigoSucursal AND SE.TipoAnimal = ? OR SE.TipoAnimal = ? GROUP BY CodigoServicio";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)) {
 			preparedStatement.setInt(1, sucursal.getCodigo());
 			preparedStatement.setString(2, tipoAnimal);
 			preparedStatement.setString(3, "Todos");
 			ResultSet resultSet = preparedStatement.executeQuery();
+			int i=1;
 			while (resultSet.next()) {
-				System.out.println("A");
-				Servicio servicio = new Servicio(resultSet.getString("Descripcion"), resultSet.getInt("Coste"));
-				System.out.println(servicio.toString());
+				Servicio servicio = new Servicio(resultSet.getInt("Codigo"), resultSet.getString("Descripcion"), resultSet.getInt("Coste"));
+				System.out.println(i+". "+servicio.toString());
+				listaServicios.add(servicio);
+				i++;
 	        }
 		}
+		return listaServicios;
 	}
 	
 	public static Servicio construir(int codServicio) throws  SQLException {

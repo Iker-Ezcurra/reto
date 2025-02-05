@@ -27,7 +27,7 @@ public class RepositorioCita {
 	}
 	
 	public static void insertar(Cita cita) throws SQLException {
-		String query = "INSERT INTO Cita VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Cita (CodAnimal, CodigoServicio, CodSucursal, CosteTotal, Fecha, FechaFin, Hora) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 			preparedStatement.setString(1, cita.getCodAnimal());
 			preparedStatement.setInt(2, cita.getCodServicio());

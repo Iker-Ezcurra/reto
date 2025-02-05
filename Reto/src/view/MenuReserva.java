@@ -12,6 +12,7 @@ import modelo.Ave;
 import modelo.Cita;
 import modelo.Peludo;
 import modelo.Reptil;
+import modelo.Servicio;
 import modelo.Sucursal;
 import repositorios.RepositorioCita;
 import repositorios.RepositorioServicio;
@@ -21,6 +22,7 @@ public class MenuReserva {
 	
 	public static Cita mostrar(Animal animal, ArrayList<Cita> listaCitas) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
+		ArrayList<Servicio> listaServicios = new ArrayList<>();
 		int costeTotal = 0;
 		String fecha;
 		String fechaFin = null;
@@ -28,9 +30,6 @@ public class MenuReserva {
 		int aux;
 		
 		Cita cita = new Cita();
-		Ave ave;
-		Reptil reptil;
-		Peludo peludo;
 
 		System.out.println("--- ¿A que sucursal desea asistir? ---");
 		System.out.println();
@@ -44,15 +43,16 @@ public class MenuReserva {
 		System.out.println();
 		System.out.println("Elija entre los servicios disponibles para su animal:");
 		if(animal instanceof Reptil) {
-			RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Reptil");
+			listaServicios = RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Reptil", listaServicios);
 		} else if (animal instanceof Ave) {
-			RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Ave");
+			listaServicios = RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Ave", listaServicios);
 		} else if (animal instanceof Peludo) {
-			RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Peludos");
+			listaServicios = RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Peludos", listaServicios);
 		} else if (animal instanceof Animal){
-			RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Todos");
+			listaServicios = RepositorioServicio.serviciosPorSurcursalYAnimal(sucursal, "Todos", listaServicios);
 		}
-		int codServicio = teclado.nextInt();
+		int opcion = teclado.nextInt();
+		int codServicio = listaServicios.get(opcion - 1).getCodigo();
 		if(codServicio == 1) {
 			DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate dateInicio;
@@ -70,7 +70,7 @@ public class MenuReserva {
 					System.out.println("Las fechas introducidas no son válidas, intentalo de nuevo");
 				}
 			} while(diferenciaDias < 1);
-			costeTotal = RepositorioServicio.construir(codServicio).getCoste() * (int) diferenciaDias;
+			costeTotal = listaServicios.get(opcion - 1).getCoste() * (int) diferenciaDias;
 		} else {
 			System.out.println("¿Que dia quieres el servicio?(yyyy-mm-dd)");
 			fecha = teclado.next();
@@ -89,13 +89,15 @@ public class MenuReserva {
 			aux = (teclado.nextInt() - 1);
 			hora = sucursal.getHorarios().get(aux);
 			sucursal.getHorarios().remove(aux);
-			costeTotal = RepositorioServicio.construir(codServicio).getCoste();
+			costeTotal = listaServicios.get(opcion - 1).getCoste();
 		}
+		cita.setCodAnimal(animal.getCodigoChip());
 		cita.setCosteTotal(costeTotal);
 		cita.setFecha(fecha);
 		cita.setFechaFin(fechaFin);
 		cita.setHora(hora);
 		cita.setCodSucursal(sucursalCodigo);
+		cita.setCodServicio(codServicio);
 		System.out.println("Cita realizada con exito");
 		return cita;
 	}

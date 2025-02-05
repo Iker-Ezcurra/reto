@@ -7,6 +7,7 @@ import java.util.Scanner;
 import modelo.Animal;
 import modelo.Ave;
 import modelo.Cita;
+import modelo.Cliente;
 import modelo.Peludo;
 import modelo.Reptil;
 import repositorios.RepositorioAnimal;
@@ -17,10 +18,9 @@ import repositorios.RepositorioReptil;
 
 public class MenuCarrito {
 
-	public static void mostrar(ArrayList<Cita> listaCitas, ArrayList<Animal> listaAnimales) throws SQLException {
+	public static void mostrar(ArrayList<Cita> listaCitas, ArrayList<Animal> listaAnimales, Cliente cliente) throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		int opcion = 0;
-		int h = 0;
 		boolean fin = false;
 		boolean finalizado = false;
 		
@@ -44,12 +44,12 @@ public class MenuCarrito {
 					System.out.println("Opción inválida");
 				}
 			} else {
+				int coste = 0;
 				for (int i = 0; i<listaCitas.size(); i++) {
-					System.out.println((i+1) +". "+ listaCitas.get(i).toString() +" "+listaAnimales.get(i).toString()+"\n");
-					h = h + listaCitas.get(i).getCosteTotal();
+					System.out.println((i+1) +". "+ listaCitas.get(i).toString() +" "+listaAnimales.get(i).toString()+ "\n");
+					coste = coste + listaCitas.get(i).getCosteTotal();
 				}
-				System.out.println();
-				System.out.println("Coste total: " + h + "€");
+				System.out.println("Coste total: " + coste + "€");
 				System.out.println();
 				System.out.println("1. Cancelar cita");
 				System.out.println("2. Confirmar reservas");
@@ -80,12 +80,11 @@ public class MenuCarrito {
 							System.out.println("¿Confirmar reservas? (Y/N)");
 							char eleccion = sc.next().charAt(0);
 							if (eleccion == 'Y' || eleccion == 'y') {
-								for (int i = 0; i < listaCitas.size(); i++) {
-									cita = listaCitas.get(i);
-									RepositorioCita.insertar(cita);
-									animal = listaAnimales.get(i);
-									if(!(RepositorioAnimal.comprobar(animal))) {
-										RepositorioAnimal.insertar(animal);
+								int posicion = 0;
+								while (listaCitas.size() != 0) {
+									animal = listaAnimales.get(posicion);
+									if(!(RepositorioAnimal.comprobar(animal.getCodigoChip()))) {
+										RepositorioAnimal.insertar(animal, cliente);
 										if (animal instanceof Peludo) {
 											peludo = (Peludo) animal;
 											RepositorioPeludo.insertar(peludo);
@@ -97,10 +96,13 @@ public class MenuCarrito {
 											RepositorioReptil.insertar(reptil);
 										}
 									}
-									listaCitas.remove(i);
-									listaAnimales.remove(i);
+									cita = listaCitas.get(posicion);
+									RepositorioCita.insertar(cita);
+									listaCitas.remove(posicion);
+									listaAnimales.remove(posicion);
 								}
 								System.out.println("Reservas confirmadas");
+								System.out.println("Carrito vaciado");
 								fin = true;
 							} else if (eleccion == 'N' || eleccion == 'n') {
 								System.out.println("Se ha cancelado la operación de confirmar citas");

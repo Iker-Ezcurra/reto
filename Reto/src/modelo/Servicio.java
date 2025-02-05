@@ -1,7 +1,6 @@
 package modelo;
 
 public class Servicio {
-
 	//atributos
 	private int codigo;
 	private String descripcion;
@@ -52,7 +51,7 @@ public class Servicio {
 
 	@Override
 	public String toString() {
-		return descripcion + "\t" + "\t" + coste + "€";
+		return descripcion + "\t" + "\t" + coste + "€ " ;
 	}
 	
 	

@@ -6,15 +6,16 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import modelo.Animal;
+import modelo.Cliente;
 
 public class RepositorioAnimal {
 	
 	//comprueba que exista el animal con este codigo del chip
-	public static boolean comprobar(Animal animal) {
+	public static boolean comprobar(String codigoAnimal) {
 		boolean encontrado = false;
 		String queryCheck = "SELECT COUNT(*) FROM Animales WHERE CodigoChip = ?";
 		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
-			checkStmt.setString(1, animal.getCodigoChip());
+			checkStmt.setString(1, codigoAnimal);
 			ResultSet resultSet = checkStmt.executeQuery();
 			resultSet.next();
 			int count = resultSet.getInt(1);
@@ -27,14 +28,39 @@ public class RepositorioAnimal {
 		return encontrado;
 	}
 	
+	public static String tipoAnimal(String codigoAnimal) throws SQLException {
+		String tipoAnimal="Otro";
+		String queryCheck = "SELECT " +
+	               "CASE " +
+	               "WHEN p.CodigoChip IS NOT NULL THEN 'Peludo' " +
+	               "WHEN a.CodigoChip IS NOT NULL THEN 'Ave' " +
+	               "WHEN r.CodigoChip IS NOT NULL THEN 'Reptil' " +
+	               "ELSE 'Desconocido' " +
+	               "END AS TipoAnimal " +
+	               "FROM Animales an " +
+	               "LEFT JOIN Peludo p ON an.CodigoChip = p.CodigoChip " +
+	               "LEFT JOIN Ave a ON an.CodigoChip = a.CodigoChip " +
+	               "LEFT JOIN Reptil r ON an.CodigoChip = r.CodigoChip " +
+	               "WHERE an.CodigoChip = ?";
+		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)){
+			checkStmt.setString(1, codigoAnimal);
+			ResultSet resultSet = checkStmt.executeQuery();
+			if (resultSet.next()) {
+				tipoAnimal = resultSet.getString("TipoAnimal");
+			}
+		}
+		return tipoAnimal;
+	}
+	
 	//método para hacer insert de un animal en la base de datos
-	public static void insertar(Animal animal) throws SQLException {
-		String query = "INSERT INTO Animales VALUES (?, ?, ?, ?)";
+	public static void insertar(Animal animal, Cliente cliente) throws SQLException {
+		String query = "INSERT INTO Animales VALUES (?, ?, ?, ?, ?)";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 			preparedStatement.setString(1, animal.getCodigoChip());
 			preparedStatement.setString(2, animal.getNombre());
 			preparedStatement.setString(3, animal.getSexo());
 			preparedStatement.setInt(4, animal.getEdad());
+			preparedStatement.setString(5, cliente.getDNI());
 			preparedStatement.executeUpdate();
 		}
 	}

@@ -17,11 +17,11 @@ public class RepositorioPeludo {
 		}
 	}
 	
-	public static boolean comprobar(Peludo peludo) {
+	public static boolean comprobar(String codigoPeludo) {
 		boolean encontrado = false;
 		String queryCheck = "SELECT COUNT(*) FROM Peludo WHERE CodigoChip = ?";
 		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
-			checkStmt.setString(1, peludo.getCodigoChip());
+			checkStmt.setString(1, codigoPeludo);
 			ResultSet resultSet = checkStmt.executeQuery();
 			resultSet.next();
 			int count = resultSet.getInt(1);
@@ -34,4 +34,20 @@ public class RepositorioPeludo {
 		return encontrado;
 	}
 	
+	public static Peludo construirPeludo(String codChip) throws SQLException {
+		String consulta = "SELECT A.Nombre, A.Sexo, A.Edad, P.Raza FROM Animales A JOIN Peludo P ON A.CodigoChip=P.CodigoChip WHERE A.CodigoChip=?";
+		Peludo peludo = new Peludo();
+		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
+			preparedStatement.setString(1, codChip);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				peludo.setNombre(resultSet.getString("Nombre"));
+				peludo.setSexo(resultSet.getString("Sexo"));
+				peludo.setEdad(resultSet.getInt("Edad"));
+				peludo.setRaza(resultSet.getString("Raza")); 
+				peludo.setCodigoChip(codChip);
+			}
+		}
+		return peludo;
+	}
 }

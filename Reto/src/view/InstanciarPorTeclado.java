@@ -30,7 +30,7 @@ public class InstanciarPorTeclado {
 		
 		while (!fin) {
 			System.out.println("¿Que tipo de animal es?");
-			System.out.println("1. Perro/Gato");
+			System.out.println("1. Peludo");
 			System.out.println("2. Ave");
 			System.out.println("3. Reptil");
 			System.out.println("4. Otro");

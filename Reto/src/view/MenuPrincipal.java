@@ -13,9 +13,9 @@ public class MenuPrincipal {
 	public static void mostrar(Cliente cliente) throws SQLException {
 		ArrayList<Cita> listaCitas = new ArrayList<>();
 		ArrayList<Animal> listaAnimales = new ArrayList<>();
-		Animal animal = new Animal();
 		Cita cita = new Cita();
 		int opcion = 0;
+		
 		do {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("\n--- ¿Que quieres hacer? ---");
@@ -31,26 +31,24 @@ public class MenuPrincipal {
 				MenuOficinas.mostrar();
 				break;
 			case 2:
-				animal = MenuAnimal.mostrar(listaAnimales);
-				listaAnimales.add(animal);
-				cita = MenuReserva.mostrar(animal, listaCitas);
+				listaAnimales = MenuAnimal.mostrar(listaAnimales);
+				cita = MenuReserva.mostrar(listaAnimales.get(listaAnimales.size() - 1), listaCitas);
 				listaCitas.add(cita);
 				break;
 			case 3:
 				cliente = MenuInicio.mostrar();
 				break;
 			case 4:
-				MenuCarrito.mostrar(listaCitas, listaAnimales);
+				MenuCarrito.mostrar(listaCitas, listaAnimales, cliente);
 				break;
 			case 5:
-				//hay que hacer un if se ha hecho una reserva mostrar carrito
-				System.exit(0);
+				MenuFinalizarApp.mostrar(listaCitas, listaAnimales, cliente);
 				break;
 			default:
 				System.out.println("Opcion invalida");
 				break;
 			}
-		} while (opcion!=5);
+		} while (true);
 		
 	}
 	
