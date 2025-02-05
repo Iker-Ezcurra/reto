@@ -8,18 +8,12 @@ import modelo.Ave;
 
 public class RepositorioAve {
 	
-	public static void insertar(Ave ave) throws SQLException {
-		String query = "INSERT INTO Ave VALUES (?, ?)";
-		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
-			preparedStatement.setString(1, ave.getCodigoChip());
-			preparedStatement.setString(2, ave.getEspecie());
-			preparedStatement.executeUpdate();
-		}
-	}
-	
+	//comprueba que exista el ave con este codigoChip en la base de datos
 	public static boolean comprobar(String codigoAve) {
 		boolean encontrado = false;
+		
 		String queryCheck = "SELECT COUNT(*) FROM Ave WHERE CodigoChip = ?";
+		
 		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
 			checkStmt.setString(1, codigoAve);
 			ResultSet resultSet = checkStmt.executeQuery();
@@ -31,12 +25,27 @@ public class RepositorioAve {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return encontrado;
 	}
 	
+	//método para hacer insert de un ave en la base de datos
+	public static void insertar(Ave ave) throws SQLException {
+		String query = "INSERT INTO Ave VALUES (?, ?)";
+		
+		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
+			preparedStatement.setString(1, ave.getCodigoChip());
+			preparedStatement.setString(2, ave.getEspecie());
+			preparedStatement.executeUpdate();
+		}
+	}
+	
+	//método para hacer insert de un ave en la base de datos
 	public static Ave construirAve(String codChip) throws SQLException {
 		String consulta = "SELECT A.Nombre, A.Sexo, A.Edad, AV.Especie FROM Animales A JOIN Ave AV ON A.CodigoChip=AV.CodigoChip WHERE A.CodigoChip=?";
+		
 		Ave ave = new Ave();
+		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, codChip);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -48,6 +57,8 @@ public class RepositorioAve {
 				ave.setCodigoChip(codChip);
 			}
 		}
+		
 		return ave;
 	}
+	
 }

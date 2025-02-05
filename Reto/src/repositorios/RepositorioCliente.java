@@ -11,8 +11,10 @@ public class RepositorioCliente {
 	//comprueba que exista un cliente con este usuario
   	public static boolean comprobarCliente(Cliente cliente) {
   		boolean encontrado = false;
+  		
   		//preparamos la consulta
   		String queryCheck = "SELECT COUNT(*) FROM Cliente WHERE Usuario = ?";
+  		
   		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
   			checkStmt.setString(1, cliente.getUsuario());
   		    ResultSet resultSet = checkStmt.executeQuery();
@@ -24,13 +26,16 @@ public class RepositorioCliente {
   		} catch (SQLException e) {
   		    e.printStackTrace();
   		}
+  		
   		return encontrado;
   	}
   	
   	//Comprueba que exista un cliente con este usuario y contraseña para iniciar sesion
   	public static boolean comprobarClienteUsuarioConstraseina(Cliente cliente) {
   		boolean encontrado = false;
+  		
   		String queryCheck = "SELECT COUNT(*) FROM Cliente WHERE Usuario = ? AND Contraseina = ?";
+  		
   			try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
   				checkStmt.setString(1, cliente.getUsuario());
   		        checkStmt.setString(2, cliente.getContraseina());
@@ -43,12 +48,14 @@ public class RepositorioCliente {
   		    } catch (SQLException e) {
   		    	e.printStackTrace();
   		    }
+  			
   		return encontrado;
   	}
 	
 	//método para insertar un cliente en la tabla
 	public static void insertar(Cliente cliente) throws SQLException {
 		String query = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?)";
+		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 		    preparedStatement.setString(1, cliente.getUsuario());
 		    preparedStatement.setString(2, cliente.getContraseina());
@@ -58,6 +65,7 @@ public class RepositorioCliente {
 		    preparedStatement.setInt(6, cliente.getNumTel());
 		    preparedStatement.executeUpdate();
 		}
+		
 	}
 	
 	public static Cliente construir(String usuario) throws  SQLException {
@@ -80,4 +88,5 @@ public class RepositorioCliente {
 		
 		return cliente;
 	}
+	
 }

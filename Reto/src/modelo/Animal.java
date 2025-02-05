@@ -10,7 +10,7 @@ public class Animal {
 	private String sexo;
 	private int edad;
 	
-	//constructor
+	//constructores
 	public Animal(String CodigoChip, String nombre, String sexo, int edad) {
 		this.codigoChip = CodigoChip;
 		this.nombre = nombre;
