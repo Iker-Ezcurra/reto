@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Objects;
+
 public class Cliente {
 	
 	//atributos
@@ -9,8 +11,9 @@ public class Cliente {
 	private String nombre;
 	private String direccion;
 	private int numTelf;
+	private boolean admin;
 
-	//constructor
+	//constructores
 	public Cliente(String usuario, String contraseina, String DNI, String nombre, String direccion, int numTelf) {
 		this.usuario = usuario;
 		this.contraseina = contraseina;
@@ -19,14 +22,6 @@ public class Cliente {
 		this.direccion = direccion;
 		this.numTelf = numTelf;
 	}
-	
-	public Cliente ( String DNI, String nombre, String direccion, int numTelf) {
-		this.DNI = DNI;
-		this.nombre = nombre;
-		this.direccion = direccion;
-		this.numTelf = numTelf;
-	}
-	
 	
 	public Cliente (String usuario, String contraseina) {
 		this.usuario=usuario;
@@ -82,6 +77,42 @@ public class Cliente {
 
 	public void setNumTel(int numTelf) {
 		this.numTelf = numTelf;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	//toString
+	@Override
+	public String toString() {
+		return "Cliente [usuario=" + usuario + ", contraseina=" + contraseina + ", DNI=" + DNI + ", nombre=" + nombre
+				+ ", direccion=" + direccion + ", numTelf=" + numTelf + ", admin=" + admin + "]";
+	}
+
+	//hashCode
+	@Override
+	public int hashCode() {
+		return Objects.hash(DNI, admin, contraseina, direccion, nombre, numTelf, usuario);
+	}
+
+	//equals
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		return Objects.equals(DNI, other.DNI) && admin == other.admin && Objects.equals(contraseina, other.contraseina)
+				&& Objects.equals(direccion, other.direccion) && Objects.equals(nombre, other.nombre)
+				&& numTelf == other.numTelf && Objects.equals(usuario, other.usuario);
 	}
 	
 }

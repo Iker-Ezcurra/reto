@@ -53,16 +53,19 @@ public class Animal {
 		this.edad = edad;
 	}
 
+	//toString
 	@Override
 	public String toString() {
-		return "Animal [codigoChip=" + codigoChip + ", nombre=" + nombre + ", sexo=" + sexo + ", edad=" + edad + "]";
+		return nombre+": Codigo del chip: "+codigoChip+", edad: "+edad+", sexo: "+sexo;
 	}
 
+	//hashCode
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigoChip);
 	}
 
+	//equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

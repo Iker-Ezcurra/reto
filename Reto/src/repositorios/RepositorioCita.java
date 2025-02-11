@@ -9,9 +9,9 @@ import modelo.Sucursal;
 
 public class RepositorioCita {
 
+	//Dada una fecha y una sucursal, elimina del arrayList de horas “Horario” (que pertenece a la sucursal) las horas ocupadas
 	public static void horasOcupadasPorSucursal(String fecha, Sucursal sucursal) throws SQLException {
 		String query = "SELECT C.Hora FROM Cita C WHERE C.fecha = ? AND CodSucursal = ?";
-		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)){
 			preparedStatement.setString(1, fecha);
 			preparedStatement.setInt(2, sucursal.getCodigo());
@@ -26,9 +26,9 @@ public class RepositorioCita {
 		}
 	}
 	
+	//Dado una cita la inserta en la base de datos
 	public static void insertar(Cita cita) throws SQLException {
 		String query = "INSERT INTO Cita (CodAnimal, CodigoServicio, CodSucursal, CosteTotal, Fecha, FechaFin, Hora) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 			preparedStatement.setString(1, cita.getCodAnimal());
 			preparedStatement.setInt(2, cita.getCodServicio());

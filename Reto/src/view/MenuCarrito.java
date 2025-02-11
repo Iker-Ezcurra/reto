@@ -18,6 +18,7 @@ import repositorios.RepositorioReptil;
 
 public class MenuCarrito {
 
+	//Dado un ArrayList de citas, un ArrayList de animales y un cliente se imprimen por pantalla los ArrayList mostrando las citas que lleva hechas y los animales para las que son. También se da la opción de cancelar una y de confirmarlas para meterlas en la base de datos
 	public static void mostrar(ArrayList<Cita> listaCitas, ArrayList<Animal> listaAnimales, Cliente cliente) throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		int opcion = 0;
@@ -31,7 +32,7 @@ public class MenuCarrito {
 		Animal animal = new Animal();
 		
 		do {
-			System.out.println("--- Carrito ---");
+			System.out.println("\n--- Carrito ---");
 			System.out.println();
 			
 			if (listaCitas.size() == 0) {
@@ -46,7 +47,8 @@ public class MenuCarrito {
 			} else {
 				int coste = 0;
 				for (int i = 0; i<listaCitas.size(); i++) {
-					System.out.println((i+1) +". "+ listaCitas.get(i).toString() +" "+listaAnimales.get(i).toString()+ "\n");
+					System.out.print((i+1) +". "+ listaCitas.get(i).toString() + " \t "+ listaAnimales.get(i).toString() +"\n \n");
+					
 					coste = coste + listaCitas.get(i).getCosteTotal();
 				}
 				System.out.println("Coste total: " + coste + "€");
@@ -121,4 +123,5 @@ public class MenuCarrito {
 			}
 		} while(!finalizado);
 	}
+	
 }

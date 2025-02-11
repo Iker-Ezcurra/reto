@@ -1,25 +1,23 @@
 package modelo;
 
+import java.util.Objects;
+
 public class Servicio {
 	//atributos
 	private int codigo;
 	private String descripcion;
 	private int coste;
 
-	//constructor
+	//constructores
 	public Servicio(int codigo, String descripcion, int coste) {
 		this.codigo = codigo;
 		this.descripcion = descripcion;
 		this.coste=coste;
 	}
 	
-	public Servicio(String descripcion, int coste) {
+	public Servicio( int coste, String descripcion) {
 		this.descripcion = descripcion;
 		this.coste=coste;
-	}
-	
-	public Servicio(int codigo) {
-		this.codigo = codigo;
 	}
 	
 	public Servicio() {}
@@ -49,9 +47,29 @@ public class Servicio {
 		this.coste=coste;
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		return descripcion + "\t" + "\t" + coste + "€ " ;
+	}
+
+	//hashCode
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo, coste, descripcion);
+	}
+
+	//equals
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Servicio other = (Servicio) obj;
+		return codigo == other.codigo && coste == other.coste && Objects.equals(descripcion, other.descripcion);
 	}
 	
 	

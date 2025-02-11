@@ -1,5 +1,10 @@
 package modelo;
 
+import java.sql.SQLException;
+import java.util.Objects;
+
+import repositorios.RepositorioServicio;
+
 public class Cita {
 
 	//atributos
@@ -13,7 +18,6 @@ public class Cita {
 	private String hora;
 	
 	//constructores
-	
 	public Cita(int codigo, String codAnimal, int codServicio, int codSucursal, int costeTotal, String fecha, String fechaFin, String hora) {
 		this.codigo = codigo;
 		this.codAnimal = codAnimal;
@@ -23,28 +27,6 @@ public class Cita {
 		this.fecha = fecha;
 		this.fechaFin = fechaFin;
 		this.hora = hora;
-	}
-	
-	public Cita(int codigo, int costeTotal, String fecha, String fechaFin) {
-		this.codigo = codigo;
-		this.costeTotal = costeTotal;
-		this.fecha = fecha;
-		this.fechaFin = fechaFin;
-	}
-
-	public Cita(int codigo, String hora, String fecha, int coste) {
-		this.codigo = codigo;
-		this.costeTotal = coste;
-		this.fecha = fecha;
-		this.hora = hora;
-	}
-	
-	public Cita(int codigo, int costeTotal, String fecha, String fechaFin, int codSucursal) {
-		this.codigo = codigo;
-		this.costeTotal = costeTotal;
-		this.fecha = fecha;
-		this.fechaFin = fechaFin;
-		this.codSucursal = codSucursal;
 	}
 	
 	public Cita () {}
@@ -114,10 +96,46 @@ public class Cita {
 		this.costeTotal = costeTotal;
 	}
 
+	//toString
 	@Override
 	public String toString() {
-		return "Cita [costeTotal=" + costeTotal + ", fecha=" + fecha + ", fechaFin=" + fechaFin
-				+ ", hora=" + hora + "]";
+		String descripcion="";
+		try {
+			descripcion = RepositorioServicio.servicioDes(codServicio);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String string="";
+		if (this.fechaFin == null) {
+			string = descripcion + ": Precio: " + costeTotal + ", fecha: " + fecha + ", hora:" + hora;
+		} else if (this.hora == null) {
+			string=  descripcion +": Precio:" + costeTotal + ", fecha:" + fecha + ", fecha de finalizacion:" + fechaFin;
+		}
+		return string;
 	}
+
+	//hashCode
+	@Override
+	public int hashCode() {
+		return Objects.hash(codAnimal, codServicio, codSucursal, codigo, costeTotal, fecha, fechaFin, hora);
+	}
+
+	//equals
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cita other = (Cita) obj;
+		return Objects.equals(codAnimal, other.codAnimal) && codServicio == other.codServicio
+				&& codSucursal == other.codSucursal && codigo == other.codigo && costeTotal == other.costeTotal
+				&& Objects.equals(fecha, other.fecha) && Objects.equals(fechaFin, other.fechaFin)
+				&& Objects.equals(hora, other.hora);
+	}
+	
+	
 	
 }

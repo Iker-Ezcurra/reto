@@ -13,6 +13,7 @@ public class InstanciarPorTeclado {
 	
 	static Scanner teclado = new Scanner(System.in);
 
+	//Se piden por pantalla los datos de un animal y al final se instancia uno con esos datos
 	public static Animal Animal() throws SQLException {
 		boolean fin = false;
 		
@@ -66,6 +67,7 @@ public class InstanciarPorTeclado {
 		return animal;
 	}
 	
+	//Se piden por pantalla todos los datos de un cliente y al final se instancia uno con esos datos
 	public static Cliente ClienteRegistro() throws SQLException {
 		System.out.println("Usuario: ");
 		String usuario = teclado.next();
@@ -85,6 +87,7 @@ public class InstanciarPorTeclado {
 		return cliente;
 	}
 	
+	//Se pide por pantalla solo el usuario y contraseña de un cliente y se instancia uno con esos datos
 	public static Cliente ClienteInicioSesion() {
 		System.out.println("Usuario: ");
 		String usuario = teclado.next();

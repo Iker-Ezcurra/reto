@@ -9,12 +9,10 @@ import modelo.Cliente;
 
 public class RepositorioAnimal {
 	
-	//comprueba que exista el animal con este codigoChip en la base de datos
+	//Dado el código de un animal, comprueba si está o no en la base de datos y devuelve un booleano que lo expresa
 	public static boolean comprobar(String codigoAnimal) {
 		boolean encontrado = false;
-		
 		String queryCheck = "SELECT COUNT(*) FROM Animales WHERE CodigoChip = ?";
-		
 		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
 			checkStmt.setString(1, codigoAnimal);
 			ResultSet resultSet = checkStmt.executeQuery();
@@ -26,17 +24,15 @@ public class RepositorioAnimal {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return encontrado;
 	}
 	
-	//obtiene mediante un case when el tipo de animal que es el que tiene el codigoChip introducido
+	//Dado el código de un animal, devuelve el tipo de animal que es haciendo una consulta con estructura case when y devuelve un String de los siguientes que expresa el tipo de animal que es: Peludo, Ave, Reptil u Otro
 	public static String tipoAnimal(String codigoAnimal) throws SQLException {
-		String tipoAnimal="Otro";
-		
-		String query = "SELECT " +
+		String tipoAnimal= "Otro";
+		String queryCheck = "SELECT " +
 	               "CASE " +
-	               "WHEN p.CodigoChip IS NOT NULL THEN 'Peludo' " +
+	               "WHEN p.CodigoChip IS NOT NULL THEN 'Peludos' " +
 	               "WHEN a.CodigoChip IS NOT NULL THEN 'Ave' " +
 	               "WHEN r.CodigoChip IS NOT NULL THEN 'Reptil' " +
 	               "ELSE 'Desconocido' " +
@@ -46,22 +42,19 @@ public class RepositorioAnimal {
 	               "LEFT JOIN Ave a ON an.CodigoChip = a.CodigoChip " +
 	               "LEFT JOIN Reptil r ON an.CodigoChip = r.CodigoChip " +
 	               "WHERE an.CodigoChip = ?";
-		
-		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(query)){
+		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)){
 			checkStmt.setString(1, codigoAnimal);
 			ResultSet resultSet = checkStmt.executeQuery();
 			if (resultSet.next()) {
 				tipoAnimal = resultSet.getString("TipoAnimal");
 			}
 		}
-		
 		return tipoAnimal;
 	}
 	
-	//método para hacer insert de un animal en la base de datos dada una instancia
+	//Dado un animal y un cliente inserta el animal en la base de datos. El cliente se le da para poder relacionarlo con su DNI
 	public static void insertar(Animal animal, Cliente cliente) throws SQLException {
 		String query = "INSERT INTO Animales VALUES (?, ?, ?, ?, ?)";
-		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 			preparedStatement.setString(1, animal.getCodigoChip());
 			preparedStatement.setString(2, animal.getNombre());
@@ -72,12 +65,10 @@ public class RepositorioAnimal {
 		}
 	}
 	
-	//metodo para instanciar un animal concreto sacando la info de la base de datos
+	//Dado el código de un animal, instancia uno con los datos del animal con ese código en la base de datos
 	public static Animal construirAnimal(String codChip) throws SQLException {
 		String consulta = "SELECT Nombre, Sexo, Edad FROM Animales WHERE CodigoChip=?";
-		
 		Animal animal = new Animal();
-		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, codChip);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -88,7 +79,6 @@ public class RepositorioAnimal {
 				animal.setCodigoChip(codChip);
 			}
 		}
-		
 		return animal;
 	}
 	

@@ -23,6 +23,7 @@ public class Conector {
             
             //la ruta se debe cambiar para cada dispositivo
             conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/reto1","root","P@ssw0rd_24");
+            //conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/reto1","root","sqlitosetira2p2");
             System.out.println("Conexion establecida");
 	        }catch(Exception e){
 	            System.out.println("Error en la conexion");

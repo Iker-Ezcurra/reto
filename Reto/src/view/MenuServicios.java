@@ -8,6 +8,7 @@ import repositorios.RepositorioServicio;
 
 public class MenuServicios {
 	
+	//Dada una sucursal, muestra los servicios disponibles en ella
 	public static void mostrar(Sucursal sucursal) throws SQLException {
 		Scanner sc = new Scanner (System.in);
 		int op;
@@ -15,12 +16,12 @@ public class MenuServicios {
 			System.out.println("\n--- Servicios disponibles ---");
 			RepositorioServicio.serviciosPorSucursal(sucursal);
 			System.out.println();
-			System.out.println("1. Volver atras");
+			System.out.println("0. Volver atras");
 			op = sc.nextInt();
-			if (op!=1) {
+			if (op != 0) {
 				System.out.println("Opcion incorrecta");
 			}
-		} while (op !=1);
+		} while (op != 0);
 	}
 	
 }

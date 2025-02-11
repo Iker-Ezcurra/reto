@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Sucursal {
 
@@ -11,11 +12,16 @@ public class Sucursal {
 	private String localidad;
 	private ArrayList<String> Horarios = new ArrayList<>(Arrays.asList("09:00:00", "09:30:00", "10:00:00", "10:30:00", "11:00:00", "11:30:00", "12:00:00", "12:30:00", "16:00:00", "16:30:00", "17:00:00", "17:30:00", "18:00:00", "18:30:00", "19:00:00", "19:30:00"));
 	
-	//constructor
+	//constructores
 	public Sucursal(int codigo, String direccion, String localidad) {
 		super();
 		this.codigo = codigo;
 		this.direccion = direccion;
+		this.localidad = localidad;
+	}
+	
+	public Sucursal (int codigo, String localidad) {
+		this.codigo = codigo;
 		this.localidad = localidad;
 	}
 	
@@ -58,6 +64,7 @@ public class Sucursal {
 		Horarios = horarios;
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		String string = "";
@@ -71,6 +78,25 @@ public class Sucursal {
 		}
 		return string;
 	}
-	
+
+	//hashCode
+	@Override
+	public int hashCode() {
+		return Objects.hash(Horarios, codigo, direccion, localidad);
+	}
+
+	//equals
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sucursal other = (Sucursal) obj;
+		return Objects.equals(Horarios, other.Horarios) && codigo == other.codigo
+				&& Objects.equals(direccion, other.direccion) && Objects.equals(localidad, other.localidad);
+	}
 	
 }

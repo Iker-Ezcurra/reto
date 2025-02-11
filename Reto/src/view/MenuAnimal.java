@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import modelo.Animal;
 import modelo.Ave;
+import modelo.Cliente;
 import modelo.Peludo;
 import modelo.Reptil;
 import repositorios.RepositorioAnimal;
@@ -15,7 +16,8 @@ import repositorios.RepositorioReptil;
 
 public class MenuAnimal {
 	
-	public static ArrayList<Animal> mostrar(ArrayList<Animal> listaAnimales) throws SQLException {
+	//Dado un ArrayList de animales, se instancia un animal, ya sea de cero o cogiendo los datos de la base de datos, lo que el cliente decida, y se añade al arrayList
+	public static ArrayList<Animal> mostrar(ArrayList<Animal> listaAnimales, Cliente cliente) throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		Animal animal = new Animal();
 		boolean fin = false;
@@ -41,7 +43,7 @@ public class MenuAnimal {
 						System.out.println("Animal encontrado");
 						listaAnimales.add( RepositorioAve.construirAve(codChip));
 						fin = true;
-					} else if (tipo.equalsIgnoreCase("Peludo")) {
+					} else if (tipo.equalsIgnoreCase("Peludos")) {
 						System.out.println("Animal encontrado");
 						listaAnimales.add(RepositorioPeludo.construirPeludo(codChip));
 						fin = true;
@@ -52,7 +54,10 @@ public class MenuAnimal {
 					}
 					
 				} else {
-					fin = buscarAnimalEnElArray(listaAnimales, codChip);
+					fin = buscarAnimalArrayList(listaAnimales, codChip);
+					if (fin) {
+						listaAnimales = agregarAnimalArrayList(listaAnimales, copiarAnimalDelArrayList(listaAnimales, codChip));
+					}
 				}
 				
 				if (fin == false) {
@@ -69,6 +74,13 @@ public class MenuAnimal {
 					System.out.println("Animal registrado correctamente");
 					fin = true;
 				}
+			} else if (opcion == 0){
+				String volver;
+				System.out.println("¿Esta seguro que quiere volver al paso anterior? Y/N");
+				volver = sc.next();
+				if (volver.equalsIgnoreCase("Y")) {
+					MenuPrincipal.mostrar(cliente);
+				}
 			} else {
 				System.out.println("Opcion incorrecta");
 			}
@@ -76,27 +88,41 @@ public class MenuAnimal {
 		return listaAnimales;
 	}
 
-	private static boolean buscarAnimalEnElArray(ArrayList<Animal> listaAnimales, String codChip) {
-		boolean encontrado = false;
-		for (int i = 0; i < listaAnimales.size(); i++) {
-			if ((codChip.equals(listaAnimales.get(i).getCodigoChip()))) {
+	//Dado un ArrayList de animales y un animal, agrega este al ArrayList
+	private static ArrayList<Animal> agregarAnimalArrayList(ArrayList<Animal> listaAnimales, Animal animal) {
+		if (animal != null) {
+			listaAnimales.add(animal);
+		}
+		return listaAnimales;
+	}
+	
+	//Dado un ArrayList de animales y un código chip devuelve una instancia de animal que o bien tendrá los datos pertenecientes a ese código chip o bien será null si no se encuentra un animal con ese código en el arrayList
+	private static Animal copiarAnimalDelArrayList(ArrayList<Animal> listaAnimales, String codChip) {
+		int aux = listaAnimales.size();
+		Animal animal = null;
+		for (int i = 0; i < aux; i++) {
+			if (listaAnimales.get(i).getCodigoChip().equals(codChip)) {
 				if(listaAnimales.get(i) instanceof Reptil) {
-					Reptil reptil = (Reptil) listaAnimales.get(i);
-					listaAnimales.add(reptil);
-					encontrado = true;
+					animal = (Reptil) listaAnimales.get(i);
 				} else if (listaAnimales.get(i) instanceof Ave) {
-					Ave ave = (Ave) listaAnimales.get(i);
-					listaAnimales.add(ave);
-					encontrado = true;
+					animal = (Ave) listaAnimales.get(i);
 				} else if (listaAnimales.get(i) instanceof Peludo) {
-					Peludo peludo = (Peludo) listaAnimales.get(i);
-					listaAnimales.add(peludo);
-					encontrado = true;
-				} else if (listaAnimales.get(i) instanceof Animal){
-					Animal animal = listaAnimales.get(i);
-					listaAnimales.add(animal);
-					encontrado = true;
+					animal = (Peludo) listaAnimales.get(i);
+				} else {
+					animal = listaAnimales.get(i);
 				}
+			}
+		}
+		return animal;
+	}
+
+	//Dado un ArrayList de animales y un código chip devuelve un booleano que expresa si hay un animal con ese código en el ArrayList
+	private static boolean buscarAnimalArrayList(ArrayList<Animal> listaAnimales, String codChip) {
+		boolean encontrado = false;
+		int aux = listaAnimales.size();
+		for (int i = 0; i < aux; i++) {
+			if ((codChip.equals(listaAnimales.get(i).getCodigoChip()))) {
+				encontrado = true;
 			}
 		}
 		return encontrado;

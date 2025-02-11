@@ -12,6 +12,8 @@ public class Main {
 		Conector.conectar();
 		
 		MenuPrincipal.mostrar(MenuInicio.mostrar());
+		
+		Conector.desconectar();
 	}
 
 }

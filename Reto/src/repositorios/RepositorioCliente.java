@@ -8,13 +8,11 @@ import modelo.Cliente;
 
 public class RepositorioCliente {
 	
-	//comprueba que exista un cliente con este usuario
+	//Dado un cliente, comprueba si está o no en la base de datos y devuelve un booleano que lo expresa
   	public static boolean comprobarCliente(Cliente cliente) {
   		boolean encontrado = false;
-  		
   		//preparamos la consulta
   		String queryCheck = "SELECT COUNT(*) FROM Cliente WHERE Usuario = ?";
-  		
   		try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
   			checkStmt.setString(1, cliente.getUsuario());
   		    ResultSet resultSet = checkStmt.executeQuery();
@@ -26,16 +24,13 @@ public class RepositorioCliente {
   		} catch (SQLException e) {
   		    e.printStackTrace();
   		}
-  		
   		return encontrado;
   	}
   	
-  	//Comprueba que exista un cliente con este usuario y contraseña para iniciar sesion
+  	//Dado un cliente, comprueba si existe o no en la base de datos un cliente con ese usuario y contraseña, esto se hace para el inicio de sesión
   	public static boolean comprobarClienteUsuarioConstraseina(Cliente cliente) {
   		boolean encontrado = false;
-  		
   		String queryCheck = "SELECT COUNT(*) FROM Cliente WHERE Usuario = ? AND Contraseina = ?";
-  		
   			try (PreparedStatement checkStmt = Conector.conexion.prepareStatement(queryCheck)) {
   				checkStmt.setString(1, cliente.getUsuario());
   		        checkStmt.setString(2, cliente.getContraseina());
@@ -48,14 +43,12 @@ public class RepositorioCliente {
   		    } catch (SQLException e) {
   		    	e.printStackTrace();
   		    }
-  			
   		return encontrado;
   	}
 	
-	//método para insertar un cliente en la tabla
+	//Dado un cliente lo inserta en la base de datos
 	public static void insertar(Cliente cliente) throws SQLException {
-		String query = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?)";
-		
+		String query = "INSERT INTO (Usuario, Constraseina, DNI, Nombre, Direccion, NumeroTelefono) Cliente VALUES (?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 		    preparedStatement.setString(1, cliente.getUsuario());
 		    preparedStatement.setString(2, cliente.getContraseina());
@@ -65,13 +58,13 @@ public class RepositorioCliente {
 		    preparedStatement.setInt(6, cliente.getNumTel());
 		    preparedStatement.executeUpdate();
 		}
-		
 	}
 	
+	//Dado el usuario de un cliente instancia uno con los datos que tenga ese usuario en la base de datos
 	public static Cliente construir(String usuario) throws  SQLException {
 		Cliente cliente = new Cliente();
 		
-		String consulta = "SELECT Usuario, Contraseina, DNI, Nombre, Direccion, NumeroTelefono FROM Cliente where Usuario=?";
+		String consulta = "SELECT DNI, Usuario, Contraseina, Nombre, Direccion, NumeroTelefono, Administrador FROM Cliente where Usuario = ?";
 		
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(consulta)){
 			preparedStatement.setString(1, usuario);
@@ -83,10 +76,10 @@ public class RepositorioCliente {
 				cliente.setNombre(resultSet.getString("Nombre"));
 				cliente.setDireccion(resultSet.getString("Direccion"));
 				cliente.setNumTel(resultSet.getInt("NumeroTelefono"));
+				cliente.setAdmin(resultSet.getBoolean("Administrador"));
 			}
 		}
 		
 		return cliente;
 	}
-	
 }
