@@ -48,7 +48,7 @@ public class RepositorioCliente {
 	
 	//Dado un cliente lo inserta en la base de datos
 	public static void insertar(Cliente cliente) throws SQLException {
-		String query = "INSERT INTO (Usuario, Constraseina, DNI, Nombre, Direccion, NumeroTelefono) Cliente VALUES (?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Cliente (Usuario, Contraseina, DNI, Nombre, Direccion, NumeroTelefono) VALUES (?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)) {
 		    preparedStatement.setString(1, cliente.getUsuario());
 		    preparedStatement.setString(2, cliente.getContraseina());

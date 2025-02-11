@@ -10,7 +10,7 @@ import modelo.Sucursal;
 public class RepositorioCita {
 
 	//Dada una fecha y una sucursal, elimina del arrayList de horas “Horario” (que pertenece a la sucursal) las horas ocupadas
-	public static void horasOcupadasPorSucursal(String fecha, Sucursal sucursal) throws SQLException {
+	public static void eliminarHorasOcupadas(String fecha, Sucursal sucursal) throws SQLException {
 		String query = "SELECT C.Hora FROM Cita C WHERE C.fecha = ? AND CodSucursal = ?";
 		try (PreparedStatement preparedStatement = Conector.conexion.prepareStatement(query)){
 			preparedStatement.setString(1, fecha);

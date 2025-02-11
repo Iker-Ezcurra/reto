@@ -20,7 +20,7 @@ public class MenuInicio {
 			System.out.println("Escoge una de las opciones: ");
 			System.out.println("1. Crear cuenta");
 			System.out.println("2. Iniciar sesión");
-			try {
+			//try {
 				opcion = teclado.nextInt();
 				if (opcion == 1) {
 					System.out.println("\n--- Estás registrandote ---");
@@ -45,10 +45,10 @@ public class MenuInicio {
 				} else {
 					System.out.println("Opción inválida");
 				}
-			} catch (Exception e) {
+			/*} catch (Exception e) {
 				System.out.println();
 				System.out.println("Opción inválida");
-			}
+			}*/
 		}
 		return cliente;
 	}

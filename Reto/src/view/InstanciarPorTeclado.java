@@ -17,12 +17,11 @@ public class InstanciarPorTeclado {
 	public static Animal Animal() throws SQLException {
 		boolean fin = false;
 		
-		System.out.println("Codigo del chip del animal:");
+		System.out.println("Codigo del chip del animal (000000000XXXX): ");
 		String codigoChip = teclado.next();
 		System.out.println("Nombre: ");
 		String nombre = teclado.next();
-		System.out.println("Sexo (M/H): ");
-		System.out.println("M(macho) / H(Hembra)");
+		System.out.println("Sexo (M (macho)/ H (hembra)): ");
 		String sexo = teclado.next();
 		System.out.println("Edad: ");
 		int edad = teclado.nextInt();
@@ -60,7 +59,7 @@ public class InstanciarPorTeclado {
 				fin = true;
 				break;
 			default:
-				System.out.println("Opcion incorrecta");
+				System.out.println("Opción inválida");
 			}
 		}
 		

@@ -56,7 +56,7 @@ public class RepositorioAdmin {
 
 	//Escribe en pantalla la cantidad de total de clientes
 	public static void consultarCantidadClientes() throws SQLException {
-		String consulta = "SELECT COUNT(DISTINCT C.DNI) FROM cliente C JOIN animales A ON C.DNI=A.DNICliente JOIN cita CI ON A.CodigoChip=CI.CodAnimal";
+		String consulta = "SELECT count(DNI) FROM cliente WHERE Administrador = false";
 		Statement statement = Conector.conexion.createStatement();
 		ResultSet resultSet = statement.executeQuery(consulta);
 		resultSet.next();

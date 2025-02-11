@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Animal {
 	
-	
 	//atributos
 	private String codigoChip;
 	private String nombre;
