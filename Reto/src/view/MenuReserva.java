@@ -16,16 +16,13 @@ import modelo.Reptil;
 import modelo.Servicio;
 import modelo.Sucursal;
 import repositorios.RepositorioAnimal;
-import repositorios.RepositorioAve;
 import repositorios.RepositorioCita;
-import repositorios.RepositorioPeludo;
-import repositorios.RepositorioReptil;
 import repositorios.RepositorioServicio;
 import repositorios.RepositorioSucursal;
 
 public class MenuReserva {
 	
-	//Dado un animal, un ArrayList de animales, un ArrayList de citas y un cliente, se le piden todos los datos de la cita y se instancia
+	//Dado un animal, un ArrayList de animales, un ArrayList de citas y un cliente, se le piden todos los datos de la cita y se instancia, se hace uso de otros métodos para pedir los datos y trabajar con ellos
 	public static Cita mostrar(Animal animal, ArrayList<Animal> listaAnimales, ArrayList<Cita> listaCitas, Cliente cliente) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		ArrayList<Servicio> listaServicios = new ArrayList<>();
@@ -41,7 +38,7 @@ public class MenuReserva {
 		
 		if (servicio.getCodigo() == 1) {
 			fechaFin = elegirFechaFin(fecha);
-			costeTotal = (int) (servicio.getCoste() * contarDiasEntreFechas(fecha, fechaFin));
+			costeTotal = (int) (servicio.getCoste() * (contarDiasEntreFechas(fecha, fechaFin) + 1));
 			
 		} else {
 			hora = elegirHora(fecha, sucursal, listaCitas);
@@ -62,6 +59,7 @@ public class MenuReserva {
 		return cita;
 	}
 
+	//Pregunta por pantalla la sucursal y instancia la que se elija
 	private static Sucursal elegirSucursal() throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		boolean valido = false;
@@ -75,12 +73,10 @@ public class MenuReserva {
 			System.out.println("2. Donostia");
 			System.out.println("3. Renteria");
 			System.out.println("4. Bilbao");
-			System.out.println();
-			System.out.println("0. Volver atrás");
 			
 			sucursalCodigo = teclado.nextInt();
 			
-			if (sucursalCodigo < 0 || sucursalCodigo > 4) {
+			if (sucursalCodigo < 1 || sucursalCodigo > 4) {
 				System.out.println("Opción inválida");
 			} else {
 				valido = true;
@@ -92,6 +88,7 @@ public class MenuReserva {
 		return sucursal;
 	}
 	
+	//Dado un ArrayList de servicios, un animal y una sucursal lo actualiza para tener solo los servicios disponibles para ese tipo de animal en esa sucursal
 	private static ArrayList<Servicio> establecerServicios(ArrayList<Servicio> listaServicios, Animal animal, Sucursal sucursal) throws SQLException{
 		listaServicios.clear();
 		if (RepositorioAnimal.comprobar(animal.getCodigoChip())) {
@@ -110,6 +107,7 @@ public class MenuReserva {
 		return listaServicios;
 	}
 	
+	//Dado un ArrayList de servicios, se imprime en pantalla y se devuelve el escogido
 	private static Servicio elegirServicio(ArrayList<Servicio> listaServicios) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		boolean valido = false;
@@ -128,11 +126,10 @@ public class MenuReserva {
 			}
 		}
 
-		Servicio servicio = listaServicios.get(opcion - 1);
-
-		return servicio;
+		return (listaServicios.get(opcion - 1));
 	}
 	
+	//Se pregunta por la fecha deseada, se hacen comprobaciones y si la fecha es aceptada se devuelve
 	private static String elegirFecha() {
 		Scanner teclado = new Scanner(System.in);
 		String fecha = "";
@@ -156,6 +153,7 @@ public class MenuReserva {
 		return fecha;
 	}
 	
+	//Dada una fecha inicial, se pregunta por la fecha de finalización, se hacen comprobaciones y si es aceptada se devuelve
 	private static String elegirFechaFin(String fecha) {
 		Scanner teclado = new Scanner(System.in);
 		String fechaFin = null;
@@ -177,6 +175,7 @@ public class MenuReserva {
 		return fechaFin;
 	}
 	
+	//Dada una fecha de inicio y una de fin se calculan los días entre ellas
 	private static long contarDiasEntreFechas(String fecha, String fechaFin) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate dateInicio = LocalDate.parse(fecha, formatter);
@@ -187,6 +186,7 @@ public class MenuReserva {
 		return diasDiferencia;
 	}
 	
+	//Dada una fecha, una sucursal y una lista de citas, se eliminan del ArrayList del horario del objeto sucursal las horas ocupadas en esa fecha en esa sucursal sacando la información de las citas tanto de la base de datos como de las que está haciendo el cliente y se están añadiendo a su carrito
 	private static String elegirHora(String fecha, Sucursal sucursal, ArrayList<Cita> listaCitas) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		

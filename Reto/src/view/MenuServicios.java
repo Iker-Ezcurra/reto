@@ -19,7 +19,7 @@ public class MenuServicios {
 			System.out.println("0. Volver atras");
 			op = sc.nextInt();
 			if (op != 0) {
-				System.out.println("Opcion incorrecta");
+				System.out.println("Opción inválida");
 			}
 		} while (op != 0);
 	}

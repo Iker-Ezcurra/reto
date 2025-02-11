@@ -35,7 +35,7 @@ public class MenuFinalizarApp {
 			}
 		}	
 		if (cerrar) {
-			System.out.println("Cerrando aplicación");
+			System.out.println("\nCerrando aplicación...");
 			System.out.println("¡MAIPet le desea un buen día!");
 			System.exit(0);
 		}

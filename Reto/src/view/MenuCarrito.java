@@ -67,7 +67,7 @@ public class MenuCarrito {
 							if (eleccion == 'Y' || eleccion == 'y') {
 								listaCitas.remove(borrar-1);
 								listaAnimales.remove(borrar-1);
-								System.out.println("La cita se ha eliminado con éxito");
+								System.out.println("La cita se ha eliminado con éxito.");
 								fin = true;
 							} else if (eleccion == 'N' || eleccion == 'n') {
 								System.out.println("Se ha cancelado la operación de borrar cita");

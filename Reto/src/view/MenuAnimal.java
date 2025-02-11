@@ -29,7 +29,7 @@ public class MenuAnimal {
 			System.out.println("2. No");
 			int opcion = sc.nextInt();
 			if (opcion == 1) {
-				System.out.println("Introduce el codigo de su chip");
+				System.out.println("Introduce el codigo de su chip (000000000XXXX): ");
 				String codChip = sc.next();
 				
 				if (RepositorioAnimal.comprobar(codChip)) {
