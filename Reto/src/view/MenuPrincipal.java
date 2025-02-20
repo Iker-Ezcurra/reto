@@ -35,7 +35,6 @@ public class MenuPrincipal {
 						MenuOficinas.mostrar();
 						break;
 					case 2:
-						System.out.println("Para volver al paso anterior en cualquier momento pulse 0");
 						listaAnimales = MenuAnimal.mostrar(listaAnimales, cliente);
 						cita = MenuReserva.mostrar(listaAnimales.get(listaAnimales.size() - 1), listaAnimales, listaCitas, cliente);
 						listaCitas.add(cita);

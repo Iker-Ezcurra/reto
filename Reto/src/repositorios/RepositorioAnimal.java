@@ -32,7 +32,7 @@ public class RepositorioAnimal {
 		String tipoAnimal= "Otro";
 		String queryCheck = "SELECT " +
 	               "CASE " +
-	               "WHEN p.CodigoChip IS NOT NULL THEN 'Peludos' " +
+	               "WHEN p.CodigoChip IS NOT NULL THEN 'Peludo' " +
 	               "WHEN a.CodigoChip IS NOT NULL THEN 'Ave' " +
 	               "WHEN r.CodigoChip IS NOT NULL THEN 'Reptil' " +
 	               "ELSE 'Desconocido' " +
